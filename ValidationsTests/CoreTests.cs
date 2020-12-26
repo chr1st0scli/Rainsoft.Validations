@@ -175,7 +175,7 @@ namespace ValidationsTests
             public int Age { get; set; }
             public string Name { get; set; }
         }
-        Guy _guy = new Guy { Age = 39, Name = "CG" };
+        readonly Guy _guy = new Guy { Age = 39, Name = "CG" };
 
         [Fact]
         public void Validate_WithPredicate_Valid()
