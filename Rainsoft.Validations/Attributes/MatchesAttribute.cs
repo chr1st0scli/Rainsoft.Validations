@@ -5,11 +5,11 @@ using Rainsoft.Validations.Core;
 namespace Rainsoft.Validations.Attributes
 {
     /// <summary>
-    /// Attribute for declaring a property that needs to match with a given regular expression.
+    /// Attribute for declaring a property or field that needs to match with a given regular expression.
     /// Several regular expressions can be combined for a target.
     /// The property's type must be either a string or a primitive type.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = true)]
     public sealed class MatchesAttribute : Attribute, IObjectValueRule
     {
         private readonly RegexValidator _validator;

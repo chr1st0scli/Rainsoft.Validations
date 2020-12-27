@@ -5,10 +5,10 @@ using Rainsoft.Validations.Core;
 namespace Rainsoft.Validations.Attributes
 {
     /// <summary>
-    /// Attribute for declaring a property that must belong to a set.
-    /// The property's type must be either a string or a primitive type.
+    /// Attribute for declaring a property or field that must belong to a set.
+    /// The target's type must be either a string or a primitive type.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public sealed class OneOfAttribute : Attribute, IObjectValueRule
     {
         private readonly OneOfValidator<object> _validator;

@@ -10,6 +10,8 @@ namespace ValidationsTests
     {
         class A
         {
+            public A(int i3) => _i3 = i3;
+
             [GreaterThan(1)]
             [LessThan(3)]
             public int I1 { get; set; }
@@ -18,10 +20,30 @@ namespace ValidationsTests
             public int I2 { get; set; }
 
             public B B { get; set; }
+
+            public int I3 => _i3;
+
+            [GreaterThan(1)]
+            [LessThan(3)]
+            private readonly int _i3;
         }
 
         class B
         {
+            public B(DateTime d3, DateTime d4)
+            {
+                _d3 = d3;
+                _d4 = d4;
+                _c3 = new C(s4: "xyz")
+                {
+                    S1 = "xyz",
+                    I1 = 111,
+                    I2 = 2,
+                    S2 = "xyz",
+                    S3 = "cat"
+                };
+            }
+
             [GreaterThan(-3)]
             [LessThan(-1)]
             public int I { get; set; }
@@ -36,10 +58,27 @@ namespace ValidationsTests
             public C C1 { get; set; }
 
             public C C2 { get; set; }
+
+            public DateTime D3 => _d3;
+
+            public DateTime D4 => _d4;
+
+            public C C3 => _c3;
+
+            [NotFuture]
+            private readonly DateTime _d3;
+
+            [Future]
+            private readonly DateTime _d4;
+
+            [NotNull]
+            private readonly C _c3;
         }
 
         class C
         {
+            public C(string s4) => _s4 = s4;
+
             [StartsWith("xy")]
             [EndsWith("yz")]
             [ShorterThan(4)]
@@ -64,22 +103,34 @@ namespace ValidationsTests
 
             [OneOf("bird", "cat", "dog")]
             public string S3 { get; set; }
+
+            public string S4 => _s4;
+
+            [StartsWith("xy")]
+            [EndsWith("yz")]
+            [ShorterThan(4)]
+            [LongerThan(2)]
+            [Length(3)]
+            [Matches("[a-z]{3}")]
+            [NotWhiteSpace]
+            [OneOf("abc", "def", "xyz")]
+            private readonly string _s4;
         }
 
         [Fact]
         public void Validate_ComplexObject_AllSucceed()
         {
             // Arrange
-            A a = new A
+            A a = new A(i3: 2)
             {
                 I1 = 2,
                 I2 = 2,
-                B = new B
+                B = new B(d3: DateTime.Now.AddDays(-1), d4: DateTime.Now.AddDays(1))
                 {
                     I = -2,
                     D1 = DateTime.Now - TimeSpan.FromDays(1),
                     D2 = DateTime.Now + TimeSpan.FromDays(1),
-                    C1 = new C
+                    C1 = new C(s4: "xyz")
                     {
                         S1 = "xyz",
                         I1 = 111,
@@ -90,14 +141,19 @@ namespace ValidationsTests
                     C2 = null
                 }
             };
+            IList<ValidationOffense> propertyOffenses = new List<ValidationOffense>();
+            IList<ValidationOffense> fieldOffenses = new List<ValidationOffense>();
 
             // Act
-            IList<ValidationOffense> offenses = new List<ValidationOffense>();
-            bool valid = a.IsValid(ref offenses);
+            bool propertiesValid = a.IsValid(ref propertyOffenses);
+            bool fieldsValid = a.IsValid(ref fieldOffenses, ValidationMode.Fields);
 
             // Assert
-            Assert.True(valid);
-            Assert.Equal(0, offenses.Count);
+            Assert.True(propertiesValid);
+            Assert.Equal(0, propertyOffenses.Count);
+
+            Assert.True(fieldsValid);
+            Assert.Equal(0, fieldOffenses.Count);
         }
     }
 }

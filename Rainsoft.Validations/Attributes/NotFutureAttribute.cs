@@ -4,10 +4,10 @@ using Rainsoft.Validations.Core;
 namespace Rainsoft.Validations.Attributes
 {
     /// <summary>
-    /// Attribute for declaring a DateTime property that needs to represent a present or past value.
+    /// Attribute for declaring a DateTime property or field that needs to represent a present or past value.
     /// The property's type must be a DateTime.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public sealed class NotFutureAttribute : Attribute, IObjectValueRule
     {
         private readonly NotFutureValidator _validator;

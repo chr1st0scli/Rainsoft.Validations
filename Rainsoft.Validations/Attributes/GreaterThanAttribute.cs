@@ -4,10 +4,10 @@ using Rainsoft.Validations.Core;
 namespace Rainsoft.Validations.Attributes
 {
     /// <summary>
-    /// Attribute for declaring a property that needs to be greater than a given margin.
-    /// The property's type must be convertible to a double.
+    /// Attribute for declaring a property or field that needs to be greater than a given margin.
+    /// The target's type must be convertible to a double.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public sealed class GreaterThanAttribute : Attribute, IObjectValueRule
     {
         private readonly GreaterValidator<double> _validator;
