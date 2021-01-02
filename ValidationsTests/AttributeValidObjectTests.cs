@@ -8,9 +8,29 @@ namespace ValidationsTests
     [Trait("Validations", "Attributes")]
     public class AttributeValidObjectTests
     {
-        class A
+        class BaseA
         {
-            public A(int i3) => _i3 = i3;
+            public BaseA(string s0, string s1)
+            {
+                this.s0 = s0;
+                _s1 = s1;
+            }
+
+            [GreaterThan(-5)]
+            [LessThan(5)]
+            public int I0 { get; set; }
+
+            [StartsWith("Hello")]
+            protected readonly string s0;
+
+            // This doesn't get to be cheked.
+            [EndsWith("World")]
+            private readonly string _s1;
+        }
+
+        class A : BaseA
+        {
+            public A(int i3, string s0, string s1) : base(s0, s1) => _i3 = i3;
 
             [GreaterThan(1)]
             [LessThan(3)]
@@ -121,8 +141,10 @@ namespace ValidationsTests
         public void Validate_ComplexObject_AllSucceed()
         {
             // Arrange
-            A a = new A(i3: 2)
+            A a = new A(i3: 2, s0: "Hello there", "lovely world")
             {
+
+                I0 = 0,
                 I1 = 2,
                 I2 = 2,
                 B = new B(d3: DateTime.Now.AddDays(-1), d4: DateTime.Now.AddDays(1))

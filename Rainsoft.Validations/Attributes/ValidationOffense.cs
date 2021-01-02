@@ -16,9 +16,9 @@
         public IObjectValueRule Rule { get; set; }
 
         /// <summary>
-        /// The object's property name that did not satisfy the rule.
+        /// The object's property or field name that did not satisfy the rule.
         /// </summary>
-        public string PropertyName { get; set; }
+        public string MemberName { get; set; }
 
         /// <summary>
         /// The object's property value that caused the rule to fail.

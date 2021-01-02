@@ -57,7 +57,7 @@ namespace Rainsoft.Validations.Attributes
                             {
                                 TypeName = objectType.Name,
                                 Rule = rule,
-                                PropertyName = member.Name,
+                                MemberName = member.Name,
                                 OffendingValue = value
                             });
                             if (!checkAll)

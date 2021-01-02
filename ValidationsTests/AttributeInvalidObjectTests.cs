@@ -8,9 +8,29 @@ namespace ValidationsTests
     [Trait("Validations", "Attributes")]
     public class AttributeInvalidObjectTests
     {
-        class A
+        class BaseA
         {
-            public A(int i3) => _i3 = i3;
+            public BaseA(string s0, string s1)
+            {
+                this.s0 = s0;
+                _s1 = s1;
+            }
+
+            [GreaterThan(5)]
+            [LessThan(-5)]
+            public int I0 { get; set; }
+
+            [StartsWith("Hello")]
+            protected readonly string s0;
+
+            // This doesn't get to be cheked.
+            [EndsWith("World")]
+            private readonly string _s1;
+        }
+
+        class A : BaseA
+        {
+            public A(int i3, string s0, string s1) : base(s0, s1) => _i3 = i3;
 
             [LessThan(1)]
             [GreaterThan(3)]
@@ -121,8 +141,9 @@ namespace ValidationsTests
         private static readonly DateTime _past = DateTime.Now.AddDays(-1);
         private static readonly DateTime _future = DateTime.Now.AddDays(1);
 
-        private readonly A _a = new A(i3: 2)
+        private readonly A _a = new A(i3: 2, s0: "abc", s1: "def")
         {
+            I0 = 0,
             I1 = 2,
             I2 = 2,
             B = new B(d3: _past, d4: _future)
@@ -155,10 +176,10 @@ namespace ValidationsTests
 
             // Assert
             Assert.False(propertiesValid);
-            Assert.Equal(23, propertyOffenses.Count);
+            Assert.Equal(25, propertyOffenses.Count);
 
             Assert.False(fieldsValid);
-            Assert.Equal(13, fieldOffenses.Count);
+            Assert.Equal(14, fieldOffenses.Count);
         }
 
         [Fact]
