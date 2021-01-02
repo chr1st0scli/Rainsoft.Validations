@@ -7,9 +7,8 @@ namespace Rainsoft.Validations.Attributes
 {
     public enum ValidationMode { Properties, Fields }
 
-    public static class Validation
+    public static class ValidationEngine
     {
-
         /// <summary>
         /// Extension method to validate a class instance based on attribute validation declarations on the class itself.
         /// </summary>
