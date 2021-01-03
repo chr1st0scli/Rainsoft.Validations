@@ -20,10 +20,11 @@ namespace ValidationsTests
             [LessThan(-5)]
             public int I0 { get; set; }
 
+            public string S1 => _s1;
+
             [StartsWith("Hello")]
             protected readonly string s0;
 
-            // This doesn't get to be cheked.
             [EndsWith("World")]
             private readonly string _s1;
         }
@@ -179,7 +180,7 @@ namespace ValidationsTests
             Assert.Equal(25, propertyOffenses.Count);
 
             Assert.False(fieldsValid);
-            Assert.Equal(14, fieldOffenses.Count);
+            Assert.Equal(15, fieldOffenses.Count);
         }
 
         [Fact]

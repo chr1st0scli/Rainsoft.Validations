@@ -20,10 +20,11 @@ namespace ValidationsTests
             [LessThan(5)]
             public int I0 { get; set; }
 
+            public string S1 => _s1;
+
             [StartsWith("Hello")]
             protected readonly string s0;
 
-            // This doesn't get to be cheked.
             [EndsWith("World")]
             private readonly string _s1;
         }
@@ -141,7 +142,7 @@ namespace ValidationsTests
         public void Validate_ComplexObject_AllSucceed()
         {
             // Arrange
-            A a = new A(i3: 2, s0: "Hello there", "lovely world")
+            A a = new A(i3: 2, s0: "Hello there", "lovely World")
             {
 
                 I0 = 0,

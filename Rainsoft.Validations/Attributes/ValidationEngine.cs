@@ -77,17 +77,30 @@ namespace Rainsoft.Validations.Attributes
 
         private static IEnumerable<MemberInfoWrapper> GetMembers(Type objectType, ValidationMode mode)
         {
+            // If objectType is null or the base class "object" is reached, stop the recursion.
+            if (objectType == null || objectType == typeof(object))
+                return Enumerable.Empty<MemberInfoWrapper>();
+
+            // Search only for the type's declared members because recursion is used to include
+            // base type members. That way, even private members of a base class can be validated.
+            const BindingFlags FLAGS = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+            IEnumerable<MemberInfoWrapper> members = null;
             switch (mode)
             {
                 case ValidationMode.Properties:
-                    return (objectType?.GetProperties() ?? Array.Empty<PropertyInfo>())
+                    members = objectType.GetProperties(FLAGS)
                         .Select(pi => new PropertyInfoWrapper(pi));
+                    break;
                 case ValidationMode.Fields:
-                    return (objectType?.GetFields(BindingFlags.Instance | BindingFlags.NonPublic) ?? Array.Empty<FieldInfo>())
+                    members = objectType.GetFields(FLAGS)
                         .Select(fi => new FieldInfoWrapper(fi));
+                    break;
                 default:
                     throw new NotImplementedException();
             }
+
+            // Recursively call this method to include the members of its base class.
+            return members.Concat(GetMembers(objectType.BaseType, mode));
         }
 
         #region Helper wrapper classes
