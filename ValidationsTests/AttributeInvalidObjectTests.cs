@@ -8,9 +8,45 @@ namespace ValidationsTests
     [Trait("Validations", "Attributes")]
     public class AttributeInvalidObjectTests
     {
-        class BaseA
+        class BaseA0
         {
-            public BaseA(string s0, string s1)
+            public string A0S0P
+            {
+                get => A0S0;
+                set => A0S0 = value;
+            }
+
+            public double A0D
+            {
+                get => a0D;
+                set => a0D = value;
+            }
+
+            public string A0S
+            {
+                get => _a0S;
+                set => _a0S = value;
+            }
+
+            [StartsWith("1")]
+            [Length(2)]
+            [LessThan(20)]
+            public int A0I { get; set; }
+
+            [ShorterThan(3)]
+            protected string A0S0 { get; set; }
+
+            [GreaterThan(1.5)]
+            [LessThan(0.5)]
+            protected double a0D;
+
+            [LongerThan(3)]
+            private string _a0S;
+        }
+
+        class BaseA1 : BaseA0
+        {
+            public BaseA1(string s0, string s1)
             {
                 this.s0 = s0;
                 _s1 = s1;
@@ -29,7 +65,7 @@ namespace ValidationsTests
             private readonly string _s1;
         }
 
-        class A : BaseA
+        class A : BaseA1
         {
             public A(int i3, string s0, string s1) : base(s0, s1) => _i3 = i3;
 
@@ -144,6 +180,10 @@ namespace ValidationsTests
 
         private readonly A _a = new A(i3: 2, s0: "abc", s1: "def")
         {
+            A0I = 232,
+            A0S0P = "123",
+            A0D = 1.1,
+            A0S = "123",
             I0 = 0,
             I1 = 2,
             I2 = 2,
@@ -177,10 +217,10 @@ namespace ValidationsTests
 
             // Assert
             Assert.False(propertiesValid);
-            Assert.Equal(25, propertyOffenses.Count);
+            Assert.Equal(29, propertyOffenses.Count);
 
             Assert.False(fieldsValid);
-            Assert.Equal(15, fieldOffenses.Count);
+            Assert.Equal(18, fieldOffenses.Count);
         }
 
         [Fact]
