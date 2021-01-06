@@ -22,20 +22,22 @@ namespace ValidationsTests
         }
 
         [Theory]
-        [InlineData("abcde", "a", "de", 5, true)]   //starts with 'a', ends with 'de' and has length of 5
-        [InlineData("abcde", "ab", "cde", 5, true)]
-        [InlineData("abcde", "b", "cde", 5, false)]
-        [InlineData("abcde", "ab", "f", 5, false)]
-        [InlineData("abcde", "ab", "cde", 6, false)]
-        [InlineData("abcde", "b", "c", 6, false)]
-        public void Validate_LengthStartEnd_Correctly(string value, string start, string end, uint length, bool expected)
+        [InlineData("abcde", "a", "de", true, 5, true)]   //starts with 'a', ends with 'de', case sensitive and has length of 5
+        [InlineData("abcde", "ab", "cde", true, 5, true)]
+        [InlineData("abcde", "AB", "CDE", true, 5, false)]
+        [InlineData("abcde", "AB", "CdE", false, 5, true)]
+        [InlineData("abcde", "b", "cde", true, 5, false)]
+        [InlineData("abcde", "ab", "f", true, 5, false)]
+        [InlineData("abcde", "ab", "cde", true, 6, false)]
+        [InlineData("abcde", "b", "c", true, 6, false)]
+        public void Validate_LengthStartEnd_Correctly(string value, string start, string end, bool caseSensitive, uint length, bool expected)
         {
             //Arrange
             //Combine multiple validators to run.
             IValidator<string> validator =
                 new LengthValidator(length,
-                new StartsWithValidator(start,
-                new EndsWithValidator(end)));
+                new StartsWithValidator(start, caseSensitive,
+                new EndsWithValidator(end, caseSensitive)));
 
             //Act
             bool valid = validator.IsValid(value);

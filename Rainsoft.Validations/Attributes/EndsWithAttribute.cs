@@ -17,10 +17,11 @@ namespace Rainsoft.Validations.Attributes
         /// Specifies the value the target must end with.
         /// </summary>
         /// <param name="end">The ending value which cannot be null.</param>
-        public EndsWithAttribute(string end)
+        /// <param name="caseSensitive">Specifies if end is checked in a case sensitive manner.</param>
+        public EndsWithAttribute(string end, bool caseSensitive = true)
         {
             _end = end;
-            _validator = new EndsWithValidator(end);
+            _validator = new EndsWithValidator(end, caseSensitive);
         }
 
         public bool IsValid(object value)

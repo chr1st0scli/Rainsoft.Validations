@@ -17,10 +17,11 @@ namespace Rainsoft.Validations.Attributes
         /// Specifies the value the target must start with.
         /// </summary>
         /// <param name="start">The starting value which cannot be null.</param>
-        public StartsWithAttribute(string start)
+        /// <param name="caseSensitive">Specifies if start is checked in a case sensitive manner.</param>
+        public StartsWithAttribute(string start, bool caseSensitive = true)
         {
             _start = start;
-            _validator = new StartsWithValidator(start);
+            _validator = new StartsWithValidator(start, caseSensitive);
         }
 
         public bool IsValid(object value)

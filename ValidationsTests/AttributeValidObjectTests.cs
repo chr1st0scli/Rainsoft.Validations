@@ -58,10 +58,10 @@ namespace ValidationsTests
 
             public string S1 => _s1;
 
-            [StartsWith("Hello")]
+            [StartsWith("Hello", false)]
             protected readonly string s0;
 
-            [EndsWith("World")]
+            [EndsWith("World", false)]
             private readonly string _s1;
         }
 
@@ -178,7 +178,7 @@ namespace ValidationsTests
         public void Validate_ComplexObject_AllSucceed()
         {
             // Arrange
-            A a = new A(i3: 2, s0: "Hello there", "lovely World")
+            A a = new A(i3: 2, s0: "hello there", s1: "wonderful world")
             {
                 A0I = 15,
                 A0S0P = "12",

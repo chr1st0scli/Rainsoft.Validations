@@ -8,17 +8,20 @@ namespace Rainsoft.Validations.Core
     public class EndsWithValidator : ValidatorDecorator<string>
     {
         protected string end;
+        protected bool caseSensitive;
 
         /// <summary>
         /// Constructs a validator for checking a value's ending.
         /// </summary>
         /// <param name="end">The desired way a value must end with.</param>
+        /// <param name="caseSensitive">Specifies if end is checked in a case sensitive manner.</param>
         /// <param name="validator">A string validator that can be combined with this one.</param>
         /// <exception cref="ArgumentNullException">Thrown if end is null.</exception>
-        public EndsWithValidator(string end, IValidator<string> validator = null)
+        public EndsWithValidator(string end, bool caseSensitive = true, IValidator<string> validator = null)
             : base(validator)
         {
             this.end = end ?? throw new ArgumentNullException(nameof(end));
+            this.caseSensitive = caseSensitive;
         }
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace Rainsoft.Validations.Core
             if (!base.IsValid(value))
                 return false;
 
-            return value?.EndsWith(end) ?? throw new ArgumentNullException(nameof(value));
+            return value?.EndsWith(end, caseSensitive ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase) ?? throw new ArgumentNullException(nameof(value));
         }
     }
 }

@@ -28,6 +28,10 @@ namespace ValidationsTests
                 set => _a0S = value;
             }
 
+            [StartsWith("ab")]
+            [EndsWith("CD")]
+            public string A0S1 { get; set; }
+
             [StartsWith("1")]
             [Length(2)]
             [LessThan(20)]
@@ -58,10 +62,10 @@ namespace ValidationsTests
 
             public string S1 => _s1;
 
-            [StartsWith("Hello")]
+            [StartsWith("Hello", false)]
             protected readonly string s0;
 
-            [EndsWith("World")]
+            [EndsWith("World", false)]
             private readonly string _s1;
         }
 
@@ -184,6 +188,7 @@ namespace ValidationsTests
             A0S0P = "123",
             A0D = 1.1,
             A0S = "123",
+            A0S1 = "ABcd",
             I0 = 0,
             I1 = 2,
             I2 = 2,
@@ -217,7 +222,7 @@ namespace ValidationsTests
 
             // Assert
             Assert.False(propertiesValid);
-            Assert.Equal(29, propertyOffenses.Count);
+            Assert.Equal(31, propertyOffenses.Count);
 
             Assert.False(fieldsValid);
             Assert.Equal(18, fieldOffenses.Count);

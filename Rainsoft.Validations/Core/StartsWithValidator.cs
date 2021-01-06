@@ -8,17 +8,20 @@ namespace Rainsoft.Validations.Core
     public class StartsWithValidator : ValidatorDecorator<string>
     {
         protected string start;
+        protected bool caseSensitive;
 
         /// <summary>
         /// Constructs a validator for checking a value's start.
         /// </summary>
         /// <param name="start">The desired way a value must start with.</param>
+        /// <param name="caseSensitive">Specifies if start is checked in a case sensitive manner.</param>
         /// <param name="validator">A string validator that can be combined with this one.</param>
         /// <exception cref="ArgumentNullException">Thrown if start is null.</exception>
-        public StartsWithValidator(string start, IValidator<string> validator = null)
+        public StartsWithValidator(string start, bool caseSensitive = true, IValidator<string> validator = null)
             : base(validator)
         {
             this.start = start ?? throw new ArgumentNullException(nameof(start));
+            this.caseSensitive = caseSensitive;
         }
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace Rainsoft.Validations.Core
             if (!base.IsValid(value))
                 return false;
 
-            return value?.StartsWith(start) ?? throw new ArgumentNullException(nameof(value));
+            return value?.StartsWith(start, caseSensitive ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase) ?? throw new ArgumentNullException(nameof(value));
         }
     }
 }
