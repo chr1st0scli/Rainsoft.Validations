@@ -10,11 +10,12 @@ namespace Rainsoft.Validations.Attributes
     public static class ValidationEngine
     {
         /// <summary>
-        /// Extension method to validate a class instance based on attribute validation declarations on the class itself.
+        /// Extension method to validate a class instance based on attribute validation declarations.
+        /// The validations are performed on the class itself and all other related classes via aggregation and inheritance relationships.
         /// </summary>
         /// <typeparam name="T">The type of object to validate.</typeparam>
         /// <param name="obj">The object to validate.</param>
-        /// <param name="mode">The type of members to be validated, either properties or fields. Note that fields can include the backing fields of auto-implemented properties.</param>
+        /// <param name="mode">The type of members to be validated, either properties or fields.</param>
         /// <returns>True if valid, false otherwise.</returns>
         public static bool IsValid<T>(this T obj, ValidationMode mode = ValidationMode.Properties) where T : class
         {
@@ -23,12 +24,14 @@ namespace Rainsoft.Validations.Attributes
         }
 
         /// <summary>
-        /// Extension method to validate a class instance based on attribute validation declarations on the class itself.
+        /// Extension method to validate a class instance based on attribute validation declarations.
+        /// The validations are performed on the class itself and all other related classes via aggregation and inheritance relationships.
+        /// Validation offenses are returned to let the client code know which validations failed.
         /// </summary>
         /// <typeparam name="T">The type of object to validate.</typeparam>
         /// <param name="obj">The object to validate.</param>
         /// <param name="offenses">If obj is invalid, it contains the validation offenses, otherwise it is empty. Null can be initially passed.</param>
-        /// <param name="mode">The type of members to be validated, either properties or fields. Note that fields can include the backing fields of auto-implemented properties.</param>
+        /// <param name="mode">The type of members to be validated, either properties or fields.</param>
         /// <param name="checkAll">True to gather all validation offenses. If false, the check stops at the first offense.</param>
         /// <returns>True if valid, false otherwise.</returns>
         public static bool IsValid<T>(this T obj, ref IList<ValidationOffense> offenses, ValidationMode mode = ValidationMode.Properties, bool checkAll = true) where T : class
@@ -41,7 +44,7 @@ namespace Rainsoft.Validations.Attributes
             // Consider either properties or fields because auto-implemented properties can have backing fields and there is no
             // safe way to tell them apart from regular ones without relying on assumptions. So, if a property's type is a class
             // where validation attributes are declared, checking both properties and fields of the enclosing type would result in 
-            // having the same validation ran more than once and therefore duplicate offense records.
+            // having the same validation run twice, once for the property and once for its backing field.
             foreach (var member in GetMembers(objectType, mode))
             {
                 object value = member.GetValue(obj);
