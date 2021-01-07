@@ -7,7 +7,7 @@ It consists of two main mechanisms.
 
 * The second one is declarative using attributes on class members.
 
-# Decorators #
+# Core #
 At runtime, you may make up a complicated rule by combining simpler ones. You can then pass that validator to whatever code you want which simply calls the `IsValid` method with a value.
 
 ```
