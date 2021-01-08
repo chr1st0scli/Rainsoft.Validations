@@ -5,6 +5,12 @@
     <Description>A library for easy validations consisting of two mechanisms. The first one is combining different validations at runtime using decorators. The second one is declarative using attributes on class members.</Description>
     <RepositoryUrl>https://github.com/chr1st0scli/Rainsoft.Validations</RepositoryUrl>
     <PackageTags>validation attribute decorator</PackageTags>
+    <Authors>Christos Giamouridis</Authors>
+    <Company>Rainsoft</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/chr1st0scli/Rainsoft.Validations</PackageProjectUrl>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
   </PropertyGroup>
 
 </Project>
