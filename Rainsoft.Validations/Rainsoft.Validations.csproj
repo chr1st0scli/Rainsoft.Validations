@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>A library for easy validations consisting of two mechanisms. The first one is combining different validations at runtime using decorators. The second one is declarative using attributes on class members.</Description>
+    <RepositoryUrl>https://github.com/chr1st0scli/Rainsoft.Validations</RepositoryUrl>
+    <PackageTags>validation attribute decorator</PackageTags>
   </PropertyGroup>
 
 </Project>
