@@ -1,5 +1,5 @@
 # Rainsoft.Validations
-A library for easy validations. You can easily validate instances of your classes (DTOs, POCOs) or any values, wheter it be method parameters or anything else.
+A library for easy validations. You can easily validate instances of your classes (DTOs, POCOs) or any values, whether it be method parameters or anything else.
 
 It consists of two main mechanisms.
 
