@@ -8,7 +8,7 @@ It consists of two main mechanisms.
 * The second one is declarative using attributes on class members.
 
 # Core #
-At runtime, you may make up a complicated rule by combining simpler ones. You can then pass that validator to whatever code you want which simply calls the `IsValid` method with a value.
+At runtime, you may compose a complicated rule by combining simpler ones and then simply call the `IsValid` method with a value. You can of course pass that validator to whatever code you want that does not need to be aware of the validation details, i.e. what that validator does.
 
 ```
 // Combine multiple validators to run.
@@ -55,4 +55,13 @@ isValid = a.IsValid(ref offenses);
 This is available in the `Rainsoft.Validations.Attributes` namespace.
 
 # Further Details #
-For more examples and details about all aspects of the library, you may consult the examples in the ValidationsTests project.
+There are validators for all basic needs like the following.
+* Starting and ending values.
+* Length related.
+* Comparisons on primitives or custom IComparable classes.
+* Regular expressions.
+* DateTime related.
+* Set related.
+* Predicates that can be used with custom classes.
+
+For more needs or even business specific validations, you can easily extend the library. Additional examples and details can be found in the ValidationsTests project.
