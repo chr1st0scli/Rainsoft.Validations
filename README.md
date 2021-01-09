@@ -1,11 +1,11 @@
 # Rainsoft.Validations
-A library for easy validations.
+A library for easy validations. You can easily validate instances of your classes (DTOs, POCOs) or any values, wheter it be method parameters or anything else.
 
-It consists of two main mechanisms. 
+It consists of two main mechanisms.
 
 * The first one is combining different validations at runtime using decorators.
 
-* The second one is declarative using attributes on class members.
+* The second one is declarative using attributes on class data members.
 
 # Core #
 At runtime, you may compose a complicated rule by combining simpler ones and then simply call the `IsValid` method with a value. You can of course pass that validator to whatever code you want that does not need to be aware of the validation details, i.e. what that validator does.
