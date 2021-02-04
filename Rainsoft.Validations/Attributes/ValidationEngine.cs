@@ -49,24 +49,9 @@ namespace Rainsoft.Validations.Attributes
             {
                 object value = member.GetValue(obj);
 
-                foreach (var attr in member.GetCustomAttributes(typeof(IObjectValueRule), false))
-                {
-                    if (attr is IObjectValueRule rule)
-                    {
-                        if (!rule.IsValid(value))
-                        {
-                            offenses.Add(new ValidationOffense
-                            {
-                                TypeName = objectType.Name,
-                                Rule = rule,
-                                MemberName = member.Name,
-                                OffendingValue = value
-                            });
-                            if (!checkAll)
-                                return false;
-                        }
-                    }
-                }
+                // Validate this member's attributes.
+                if (!ValidateAttributes(member, objectType.Name, value, offenses, checkAll) && !checkAll)
+                    return false;
 
                 // If the member is a reference type, call this function recursively.
                 if (member.MemberType.IsClass && member.MemberType != typeof(string))
@@ -76,6 +61,76 @@ namespace Rainsoft.Validations.Attributes
                 }
             }
             return offenses.Count == 0;
+        }
+
+        /// <summary>
+        /// Extension method to validate a class instance's member based on its attribute validation declarations.
+        /// </summary>
+        /// <typeparam name="T">The type of object to validate.</typeparam>
+        /// <param name="obj">The object to validate.</param>
+        /// <param name="memberName">The member's property or field name.</param>
+        /// <returns>True if valid, false otherwise.</returns>
+        /// <exception cref="ArgumentException">If member name is not provided.</exception>
+        /// <exception cref="InvalidOperationException">If the member name does not exist or is inaccessible due to its access modifier.</exception>
+        public static bool IsMemberValid<T>(this T obj, string memberName) where T : class
+        {
+            IList<ValidationOffense> offenses = null;
+            return obj.IsMemberValid(memberName, ref offenses, false);
+        }
+
+        /// <summary>
+        /// Extension method to validate a class instance's member based on its attribute validation declarations.
+        /// Validation offenses are returned to let the client code know which validations failed.
+        /// </summary>
+        /// <typeparam name="T">The type of object to validate.</typeparam>
+        /// <param name="obj">The object to validate.</param>
+        /// <param name="memberName">The member's property or field name.</param>
+        /// <param name="offenses">If obj's member is invalid, it contains the validation offenses, otherwise it is empty. Null can be initially passed.</param>
+        /// <param name="checkAll">True to gather all member's validation offenses. If false, the check stops at the first offense.</param>
+        /// <returns>True if valid, false otherwise.</returns>
+        /// <exception cref="ArgumentException">If member name is not provided.</exception>
+        /// <exception cref="InvalidOperationException">If the member name does not exist or is inaccessible due to its access modifier.</exception>
+        public static bool IsMemberValid<T>(this T obj, string memberName, ref IList<ValidationOffense> offenses, bool checkAll = true) where T : class
+        {
+            if (string.IsNullOrWhiteSpace(memberName))
+                throw new ArgumentException(nameof(memberName), nameof(memberName));
+
+            if (offenses == null)
+                offenses = new List<ValidationOffense>();
+
+            Type objectType = obj.GetType();
+
+            var member = GetMember(objectType, memberName);
+            object value = member.GetValue(obj);
+
+            // Validate this member's attributes.
+            if (!ValidateAttributes(member, objectType.Name, value, offenses, checkAll) && !checkAll)
+                return false;
+
+            return offenses.Count == 0;
+        }
+
+        private static bool ValidateAttributes(MemberInfoWrapper member, string typeName, object value, IList<ValidationOffense> offenses, bool checkAll)
+        {
+            bool valid = true;
+            foreach (var attr in member.GetCustomAttributes(typeof(IObjectValueRule), false))
+            {
+                if (attr is IObjectValueRule rule && !rule.IsValid(value))
+                {
+                    valid = false;
+                    offenses.Add(new ValidationOffense
+                    {
+                        TypeName = typeName,
+                        Rule = rule,
+                        MemberName = member.Name,
+                        OffendingValue = value
+                    });
+                    if (!checkAll)
+                        return valid;
+                }
+            }
+
+            return valid;
         }
 
         private static IEnumerable<MemberInfoWrapper> GetMembers(Type objectType, ValidationMode mode)
@@ -104,6 +159,19 @@ namespace Rainsoft.Validations.Attributes
 
             // Recursively call this method to include the members of its base class.
             return members.Concat(GetMembers(objectType.BaseType, mode));
+        }
+
+        private static MemberInfoWrapper GetMember(Type objectType, string memberName)
+        {
+            const BindingFlags FLAGS = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+            var pi = objectType.GetProperty(memberName, FLAGS);
+            if (pi != null)
+                return new PropertyInfoWrapper(pi);
+            else
+            {
+                var fi = objectType.GetField(memberName, FLAGS) ?? throw new InvalidOperationException($"Invalid member {memberName} for {objectType.Name}.");
+                return new FieldInfoWrapper(fi);
+            }
         }
 
         #region Helper wrapper classes

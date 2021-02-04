@@ -174,41 +174,42 @@ namespace ValidationsTests
             private readonly string _s4;
         }
 
+        private readonly A _a = new A(i3: 2, s0: "hello there", s1: "wonderful world")
+        {
+            A0I = 15,
+            A0S0P = "12",
+            A0D = 1.9,
+            A0S = "1234",
+            I0 = 0,
+            I1 = 2,
+            I2 = 2,
+            B = new B(d3: DateTime.Now.AddDays(-1), d4: DateTime.Now.AddDays(1))
+            {
+                I = -2,
+                D1 = DateTime.Now - TimeSpan.FromDays(1),
+                D2 = DateTime.Now + TimeSpan.FromDays(1),
+                C1 = new C(s4: "xyz")
+                {
+                    S1 = "xyz",
+                    I1 = 111,
+                    I2 = 2,
+                    S2 = "xyz",
+                    S3 = "cat"
+                },
+                C2 = null
+            }
+        };
+
         [Fact]
         public void Validate_ComplexObject_AllSucceed()
         {
             // Arrange
-            A a = new A(i3: 2, s0: "hello there", s1: "wonderful world")
-            {
-                A0I = 15,
-                A0S0P = "12",
-                A0D = 1.9,
-                A0S = "1234",
-                I0 = 0,
-                I1 = 2,
-                I2 = 2,
-                B = new B(d3: DateTime.Now.AddDays(-1), d4: DateTime.Now.AddDays(1))
-                {
-                    I = -2,
-                    D1 = DateTime.Now - TimeSpan.FromDays(1),
-                    D2 = DateTime.Now + TimeSpan.FromDays(1),
-                    C1 = new C(s4: "xyz")
-                    {
-                        S1 = "xyz",
-                        I1 = 111,
-                        I2 = 2,
-                        S2 = "xyz",
-                        S3 = "cat"
-                    },
-                    C2 = null
-                }
-            };
             IList<ValidationOffense> propertyOffenses = new List<ValidationOffense>();
             IList<ValidationOffense> fieldOffenses = new List<ValidationOffense>();
 
             // Act
-            bool propertiesValid = a.IsValid(ref propertyOffenses);
-            bool fieldsValid = a.IsValid(ref fieldOffenses, ValidationMode.Fields);
+            bool propertiesValid = _a.IsValid(ref propertyOffenses);
+            bool fieldsValid = _a.IsValid(ref fieldOffenses, ValidationMode.Fields);
 
             // Assert
             Assert.True(propertiesValid);
@@ -216,6 +217,24 @@ namespace ValidationsTests
 
             Assert.True(fieldsValid);
             Assert.Equal(0, fieldOffenses.Count);
+        }
+
+        [Theory]
+        [InlineData(nameof(A.I1))]  // Property
+        [InlineData(nameof(A.A0I))] // Inherited property
+        [InlineData("_i3")] // Field
+        [InlineData("a0D")] // Inherited field
+        public void Validate_Property_AllSucceed(string memberName)
+        {
+            // Arrange
+            IList<ValidationOffense> offenses = new List<ValidationOffense>();
+
+            // Act
+            bool valid = _a.IsMemberValid(memberName, ref offenses);
+
+            // Assert
+            Assert.True(valid);
+            Assert.Equal(0, offenses.Count);
         }
     }
 }

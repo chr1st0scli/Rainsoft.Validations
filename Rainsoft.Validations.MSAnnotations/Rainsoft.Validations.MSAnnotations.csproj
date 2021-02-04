@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Christos Giamouridis</Authors>
+    <Company>Rainsoft</Company>
+    <Description>A library that allows you to integrate Rainsoft.Validations with System.ComponentModel.Annotations, thus enabling you to use Rainsoft.Validations transparently with Microsoft's validation infrastructure.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>rainsoft validation annotation mvc</PackageTags>
+    <Version>1.0.0-beta004</Version>
+    <PackageProjectUrl>https://github.com/chr1st0scli/Rainsoft.Validations</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/chr1st0scli/Rainsoft.Validations</RepositoryUrl>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Rainsoft.Validations\Rainsoft.Validations.csproj" />
+  </ItemGroup>
+
+</Project>

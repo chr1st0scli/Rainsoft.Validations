@@ -246,5 +246,75 @@ namespace ValidationsTests
             Assert.False(fieldsValid);
             Assert.Equal(1, fieldOffenses.Count);
         }
+
+        [Fact]
+        public void Validate_Property_AllFailed()
+        {
+            // Arrange
+            IList<ValidationOffense> offenses = new List<ValidationOffense>();
+
+            // Act
+            bool valid = _a.IsMemberValid(nameof(A.I1), ref offenses);
+
+            // Assert
+            Assert.False(valid);
+            Assert.Equal(2, offenses.Count);
+        }
+
+        [Fact]
+        public void Validate_Property_StopsOnFirstFailure()
+        {
+            // Arrange
+            IList<ValidationOffense> offenses = new List<ValidationOffense>();
+
+            // Act
+            bool valid = _a.IsMemberValid(nameof(A.I1), ref offenses, false);
+
+            // Assert
+            Assert.False(valid);
+            Assert.Equal(1, offenses.Count);
+        }
+
+        [Fact]
+        public void Validate_InheritedProperty_AllFailed()
+        {
+            // Arrange
+            IList<ValidationOffense> offenses = new List<ValidationOffense>();
+
+            // Act
+            bool valid = _a.IsMemberValid(nameof(A.A0I), ref offenses);
+
+            // Assert
+            Assert.False(valid);
+            Assert.Equal(3, offenses.Count);
+        }
+
+        [Fact]
+        public void Validate_Field_AllFailed()
+        {
+            // Arrange
+            IList<ValidationOffense> offenses = new List<ValidationOffense>();
+
+            // Act
+            bool valid = _a.IsMemberValid("_i3", ref offenses);
+
+            // Assert
+            Assert.False(valid);
+            Assert.Equal(2, offenses.Count);
+        }
+
+        [Fact]
+        public void Validate_InheritedField_AllFailed()
+        {
+            // Arrange
+            IList<ValidationOffense> offenses = new List<ValidationOffense>();
+
+            // Act
+            bool valid = _a.IsMemberValid("a0D", ref offenses);
+
+            // Assert
+            Assert.False(valid);
+            Assert.Equal(2, offenses.Count);
+        }
     }
 }

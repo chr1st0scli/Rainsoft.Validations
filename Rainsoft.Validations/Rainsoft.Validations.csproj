@@ -2,16 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>A library for easy validations consisting of two mechanisms. The first one is combining different validations at runtime using decorators. The second one is declarative using attributes on class members.</Description>
+    <Description>A library for easy validations. You can easily validate instances of your classes (DTOs, POCOs) or any values, whether it be method parameters or anything else. It can also be used for validating user input or writing tests.
+
+It consists of two main mechanisms. The first one is combining different validations at runtime using decorators. The second one is declarative using attributes on class data members.</Description>
     <RepositoryUrl>https://github.com/chr1st0scli/Rainsoft.Validations</RepositoryUrl>
-    <PackageTags>validation attribute decorator</PackageTags>
+    <PackageTags>validation attribute decorator dto poco</PackageTags>
     <Authors>Christos Giamouridis</Authors>
     <Company>Rainsoft</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/chr1st0scli/Rainsoft.Validations</PackageProjectUrl>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
-    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.3-build002</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
 </Project>
