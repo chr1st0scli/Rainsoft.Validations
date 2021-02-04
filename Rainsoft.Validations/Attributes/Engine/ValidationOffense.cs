@@ -1,4 +1,4 @@
-﻿namespace Rainsoft.Validations.Attributes
+﻿namespace Rainsoft.Validations.Attributes.Engine
 {
     /// <summary>
     /// The information for a validation rule that failed, i.e. it is not satisfied.

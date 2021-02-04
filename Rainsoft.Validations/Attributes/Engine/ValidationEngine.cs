@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Rainsoft.Validations.Attributes
+namespace Rainsoft.Validations.Attributes.Engine
 {
-    public enum ValidationMode { Properties, Fields }
-
     public static class ValidationEngine
     {
         /// <summary>
@@ -173,48 +171,5 @@ namespace Rainsoft.Validations.Attributes
                 return new FieldInfoWrapper(fi);
             }
         }
-
-        #region Helper wrapper classes
-        /// <summary>
-        /// This is a design choice to compensate for the fact that there is no common inherited GetValue method for PropertyInfo and FieldInfo.
-        /// Also, there is no common inherited Type property representing either PropertyType or FieldType depending on the runtime type.
-        /// </summary>
-        abstract class MemberInfoWrapper
-        {
-            private readonly MemberInfo _mi;
-
-            public MemberInfoWrapper(MemberInfo mi) => _mi = mi;
-
-            public string Name => _mi.Name;
-
-            public object[] GetCustomAttributes(Type attributeType, bool inherit) => _mi.GetCustomAttributes(attributeType, inherit);
-
-            public abstract Type MemberType { get; }
-
-            public abstract object GetValue(object obj);
-        }
-
-        class PropertyInfoWrapper : MemberInfoWrapper
-        {
-            private readonly PropertyInfo _pi;
-
-            public PropertyInfoWrapper(PropertyInfo pi) : base(pi) => _pi = pi;
-
-            public override Type MemberType => _pi.PropertyType;
-
-            public override object GetValue(object obj) => _pi.GetValue(obj);
-        }
-
-        class FieldInfoWrapper : MemberInfoWrapper
-        {
-            private readonly FieldInfo _fi;
-
-            public FieldInfoWrapper(FieldInfo fi) : base(fi) => _fi = fi;
-
-            public override Type MemberType => _fi.FieldType;
-
-            public override object GetValue(object obj) => _fi.GetValue(obj);
-        }
-        #endregion
     }
 }
