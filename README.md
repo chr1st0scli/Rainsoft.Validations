@@ -44,13 +44,19 @@ class A
 // Create an object and fill in whatever values you want.
 A a = new A();
 
-// Use namespace Rainsoft.Validations.Attributes to have the IsValid extension method available on your classes.
+// Use namespace Rainsoft.Validations.Attributes.Engine to have the IsValid extension method available on your classes.
 // Simply call IsValid to determine if your instance satisfies all rules.
 bool isValid = a.IsValid();
 
 // Or you can find out exactly which rules are not satisfied by checking the offenses.
 IList<ValidationOffense> offenses = new List<ValidationOffense>();
 isValid = a.IsValid(ref offenses);
+
+// You can also validate a specific member of your object.
+isValid = a.IsMemberValid(nameof(A.I)); 
+
+// Or again...
+isValid = a.IsMemberValid(nameof(A.I), ref offenses);
 ```
 This is available in the `Rainsoft.Validations.Attributes` namespace.
 
