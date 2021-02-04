@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rainsoft.Validations.Attributes
+namespace Rainsoft.Validations.Attributes.Engine
 {
     internal static class IObjectValueRuleExtensions
     {

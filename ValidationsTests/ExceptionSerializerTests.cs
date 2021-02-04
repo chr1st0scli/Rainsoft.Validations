@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Rainsoft.Validations.Attributes;
+using Rainsoft.Validations.Attributes.Engine;
 using Xunit;
 
 namespace ValidationsTests

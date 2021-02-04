@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Rainsoft.Validations.Attributes
+namespace Rainsoft.Validations.Attributes.Engine
 {
     /// <summary>
     /// An exception that is meant to be thrown when a validation attribute is applied on an incompatible type.
