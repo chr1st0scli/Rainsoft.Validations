@@ -60,6 +60,26 @@ isValid = a.IsMemberValid(nameof(A.I), ref offenses);
 ```
 This is available in the `Rainsoft.Validations.Attributes` namespace.
 
+# MVC and Web API Integration #
+If you want to use or combine Rainsoft.Validations with Microsoft's MVC or Web API infrastructure, you can use the Rainsoft.Validations.MSAnnotations library.
+You can then use all Rainsoft attributes and the additional ValidationAttributeAdapter to enable the .NET infrastructure use your attributes.
+
+```
+public class Book
+{
+	[ValidationAttributeAdapter("Title is invalid")]
+	[LongerThan(3)]
+	[ShorterThan(80)]
+	public string Title { get; set; }
+}
+
+// Then, in your Controller or ApiController, you can check if the validation fails.
+if (!ModelState.IsValid)
+{
+	//...
+}
+```
+
 # Further Details #
 There are validators for all basic needs like the following.
 * Starting and ending values.
