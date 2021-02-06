@@ -62,7 +62,7 @@ This is available in the `Rainsoft.Validations.Attributes` namespace.
 
 # MVC and Web API Integration #
 If you want to use or combine Rainsoft.Validations with Microsoft's MVC or Web API infrastructure, you can use the Rainsoft.Validations.MSAnnotations library.
-You can then use all Rainsoft attributes and the additional MSValidationAdapter to enable the .NET infrastructure use your attributes.
+You can then use all Rainsoft attributes and the additional MSValidationAdapter to enable the .NET infrastructure use your attributes implicitly.
 
 ```
 public class Book
