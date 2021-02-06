@@ -7,6 +7,9 @@ namespace Rainsoft.Validations.Core
     /// </summary>
     public class LengthValidator : ValidatorDecorator<string>
     {
+        /// <summary>
+        /// The desired length of a value.
+        /// </summary>
         protected uint length;
 
         /// <summary>
@@ -21,7 +24,7 @@ namespace Rainsoft.Validations.Core
         }
 
         /// <summary>
-        /// Validates that a string is of a certain length. 
+        /// Validates that a string is of a certain length.
         /// A possible nested validator is executed first if one was supplied in the constructor.
         /// </summary>
         /// <param name="value">The value to validate.</param>

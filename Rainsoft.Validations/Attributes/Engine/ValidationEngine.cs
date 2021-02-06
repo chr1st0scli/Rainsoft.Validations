@@ -5,6 +5,9 @@ using System.Reflection;
 
 namespace Rainsoft.Validations.Attributes.Engine
 {
+    /// <summary>
+    /// Static class with extension methods for validating instances of any class.
+    /// </summary>
     public static class ValidationEngine
     {
         /// <summary>

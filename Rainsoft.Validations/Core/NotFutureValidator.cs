@@ -18,7 +18,7 @@ namespace Rainsoft.Validations.Core
         }
 
         /// <summary>
-        /// Validates that value does not belong to the future.
+        /// Validates that <paramref name="value"/> does not belong to the future.
         /// </summary>
         /// <param name="value">The DateTime to validate. If time should be ignored, only the date part can be included.</param>
         /// <returns>True if value is less than or equal to DateTime.Now.</returns>

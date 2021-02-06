@@ -7,7 +7,14 @@ namespace Rainsoft.Validations.Core
     /// </summary>
     public class EndsWithValidator : ValidatorDecorator<string>
     {
+        /// <summary>
+        /// The desired way a value must end with.
+        /// </summary>
         protected string end;
+
+        /// <summary>
+        /// Specifies if <see cref="end"/> is checked in a case sensitive manner.
+        /// </summary>
         protected bool caseSensitive;
 
         /// <summary>

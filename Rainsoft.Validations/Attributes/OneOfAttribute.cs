@@ -25,6 +25,13 @@ namespace Rainsoft.Validations.Attributes
             _validator = new OneOfValidator<object>(values);
         }
 
+        /// <summary>
+        /// Validates that <paramref name="value"/> belongs to a certain set.
+        /// </summary>
+        /// <param name="value">The value to be searched for. It must be a primitive or string.</param>
+        /// <returns>True if valid, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if value is null.</exception>
+        /// <exception cref="InvalidRuleException">Thrown if value's runtime type is neither a primitive nor a string.</exception>
         public bool IsValid(object value)
         {
             // Just make sure it's a string or a primitive.
@@ -32,6 +39,10 @@ namespace Rainsoft.Validations.Attributes
             return _validator.IsValid(value);
         }
 
+        /// <summary>
+        /// Returns a string representation of this validation attribute specification.
+        /// </summary>
+        /// <returns>A string representation of this instance.</returns>
         public override string ToString() => $"{nameof(OneOfAttribute)} {string.Join(",", _values)}";
     }
 }

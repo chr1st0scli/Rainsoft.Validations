@@ -18,12 +18,22 @@ namespace Rainsoft.Validations.Attributes
         /// </summary>
         public FutureAttribute() => _validator = new FutureValidator();
 
+        /// <summary>
+        /// Validates that <paramref name="value"/> belongs to the future.
+        /// </summary>
+        /// <param name="value">The value to validate which must be a DateTime.</param>
+        /// <returns>True if value is greater than DateTime.Now.</returns>
+        /// <exception cref="InvalidRuleException">Thrown if value is not a DateTime or is null.</exception>
         public bool IsValid(object value)
         {
             DateTime dt = this.GetFromDateTime(value);
             return _validator.IsValid(dt);
         }
 
+        /// <summary>
+        /// Returns a string representation of this validation attribute specification.
+        /// </summary>
+        /// <returns>A string representation of this instance.</returns>
         public override string ToString() => $"{nameof(FutureAttribute)}";
     }
 }

@@ -8,6 +8,9 @@ namespace Rainsoft.Validations.Core
     /// </summary>
     public class RegexValidator : ValidatorDecorator<string>
     {
+        /// <summary>
+        /// The regular expression used for validating a value.
+        /// </summary>
         protected Regex regex;
 
         /// <summary>
@@ -23,7 +26,7 @@ namespace Rainsoft.Validations.Core
         }
 
         /// <summary>
-        /// Validates that value matches a regular expression.
+        /// Validates that <paramref name="value"/> matches a regular expression.
         /// A possible nested validator is executed first if one was supplied in the constructor.
         /// </summary>
         /// <param name="value">The value to validate.</param>

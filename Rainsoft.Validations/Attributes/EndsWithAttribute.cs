@@ -25,12 +25,23 @@ namespace Rainsoft.Validations.Attributes
             _validator = new EndsWithValidator(end, caseSensitive);
         }
 
+        /// <summary>
+        /// Validates that <paramref name="value"/> ends with a specific way.
+        /// </summary>
+        /// <param name="value">The value to validate. It must be a primitive or string.</param>
+        /// <returns>True if valid, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if value is null.</exception>
+        /// <exception cref="InvalidRuleException">Thrown if value's runtime type is neither a primitive nor a string.</exception>
         public bool IsValid(object value)
         {
             string s = this.GetFromStringOrPrimitive(value);
             return _validator.IsValid(s);
         }
 
+        /// <summary>
+        /// Returns a string representation of this validation attribute specification.
+        /// </summary>
+        /// <returns>A string representation of this instance.</returns>
         public override string ToString() => $"{nameof(EndsWithAttribute)} {_end}";
     }
 }

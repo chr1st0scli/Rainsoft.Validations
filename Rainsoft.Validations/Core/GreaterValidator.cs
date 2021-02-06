@@ -8,6 +8,9 @@ namespace Rainsoft.Validations.Core
     /// <typeparam name="T">The type of the margin and value.</typeparam>
     public class GreaterValidator<T> : ValidatorDecorator<IComparable<T>>
     {
+        /// <summary>
+        /// The margin that a value must surpass.
+        /// </summary>
         protected T margin;
 
         /// <summary>
@@ -25,7 +28,7 @@ namespace Rainsoft.Validations.Core
         }
 
         /// <summary>
-        /// Validates that value is greater than a specified margin.
+        /// Validates that <paramref name="value"/>  is greater than a specified margin.
         /// A possible nested validator is executed first if one was supplied in the constructor.
         /// </summary>
         /// <param name="value">The value to validate. It can be anything that is comparable with margin.</param>

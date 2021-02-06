@@ -5,6 +5,9 @@
     /// </summary>
     public class LongerValidator : ValidatorDecorator<string>
     {
+        /// <summary>
+        /// The length a value's length must surpass.
+        /// </summary>
         protected uint length;
 
         /// <summary>

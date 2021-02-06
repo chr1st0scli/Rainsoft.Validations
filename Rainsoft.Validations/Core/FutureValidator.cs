@@ -17,7 +17,7 @@ namespace Rainsoft.Validations.Core
         }
 
         /// <summary>
-        /// Validates that value belongs to the future.
+        /// Validates that <paramref name="value"/> belongs to the future.
         /// </summary>
         /// <param name="value">The DateTime to validate.</param>
         /// <returns>True if value is greater than DateTime.Now.</returns>

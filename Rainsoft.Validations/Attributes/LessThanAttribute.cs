@@ -24,12 +24,23 @@ namespace Rainsoft.Validations.Attributes
             _validator = new LesserValidator<double>(margin);
         }
 
+        /// <summary>
+        /// Validates that <paramref name="value"/> is less than a specified margin.
+        /// </summary>
+        /// <param name="value">The value to validate which must be convertible to a double.</param>
+        /// <returns>True if valid, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if value is null.</exception>
+        /// <exception cref="InvalidRuleException">Thrown if value's runtime type is not compatible with a double.</exception>
         public bool IsValid(object value)
         {
             double d = this.GetFromDoubleCompatible(value);
             return _validator.IsValid(d);
         }
 
+        /// <summary>
+        /// Returns a string representation of this validation attribute specification.
+        /// </summary>
+        /// <returns>A string representation of this instance.</returns>
         public override string ToString() => $"{nameof(LessThanAttribute)} {_margin}";
     }
 }

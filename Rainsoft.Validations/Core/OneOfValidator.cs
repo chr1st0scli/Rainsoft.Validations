@@ -10,7 +10,14 @@ namespace Rainsoft.Validations.Core
     /// <typeparam name="T">The type of a value to be searched in a set of acceptable values.</typeparam>
     public class OneOfValidator<T> : ValidatorDecorator<T>
     {
+        /// <summary>
+        /// The set a value must belong to.
+        /// </summary>
         protected IEnumerable<T> values;
+
+        /// <summary>
+        /// Comparer to be used when searching in <see cref="values"/>, that defines when two values are equal.
+        /// </summary>
         protected IEqualityComparer<T> comparer;
 
         /// <summary>
@@ -28,7 +35,7 @@ namespace Rainsoft.Validations.Core
         }
 
         /// <summary>
-        /// Validates that value belongs to a certain set.
+        /// Validates that <paramref name="value"/> belongs to a certain set.
         /// A possible nested validator is executed first if one was supplied in the constructor.
         /// </summary>
         /// <param name="value">The value to be searched for.</param>

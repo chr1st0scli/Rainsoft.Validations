@@ -8,6 +8,9 @@ namespace Rainsoft.Validations.Core
     /// <typeparam name="T">The type of the value passed to the predicate.</typeparam>
     public class PredicateValidator<T> : ValidatorDecorator<T>
     {
+        /// <summary>
+        /// A method that returns true for valid and false otherwise.
+        /// </summary>
         protected Predicate<T> predicate;
 
         /// <summary>

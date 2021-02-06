@@ -7,7 +7,14 @@ namespace Rainsoft.Validations.Core
     /// </summary>
     public class StartsWithValidator : ValidatorDecorator<string>
     {
+        /// <summary>
+        /// The desired way a value must start with.
+        /// </summary>
         protected string start;
+
+        /// <summary>
+        /// Specifies if <see cref="start"/> is checked in a case sensitive manner.
+        /// </summary>
         protected bool caseSensitive;
 
         /// <summary>
