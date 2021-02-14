@@ -25,7 +25,7 @@ namespace Rainsoft.Validations.Core
 
         /// <summary>
         /// Validates that a string is of a certain length.
-        /// A possible nested validator is executed first if one was supplied in the constructor.
+        /// <para>A possible nested validator is executed first if one was supplied in the constructor.</para>
         /// </summary>
         /// <param name="value">The value to validate.</param>
         /// <returns>True if valid, false otherwise.</returns>
@@ -36,6 +36,7 @@ namespace Rainsoft.Validations.Core
                 return false;
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
+
             return value.Length == length;
         }
     }

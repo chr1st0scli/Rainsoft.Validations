@@ -43,6 +43,8 @@ namespace ValidationsTests
 
             [GreaterThan(1.5)]
             [LessThan(0.5)]
+            [GreaterThanOrEqualTo(1.11)]
+            [LessThanOrEqualTo(1.09)]
             protected double a0D;
 
             [LongerThan(3)]
@@ -59,6 +61,8 @@ namespace ValidationsTests
 
             [GreaterThan(5)]
             [LessThan(-5)]
+            [GreaterThanOrEqualTo(1)]
+            [LessThanOrEqualTo(-1)]
             public int I0 { get; set; }
 
             public string S1 => _s1;
@@ -76,6 +80,8 @@ namespace ValidationsTests
 
             [LessThan(1)]
             [GreaterThan(3)]
+            [GreaterThanOrEqualTo(3)]
+            [LessThanOrEqualTo(1)]
             public int I1 { get; set; }
 
             [LessThan(2)]
@@ -87,6 +93,8 @@ namespace ValidationsTests
 
             [LessThan(1)]
             [GreaterThan(3)]
+            [GreaterThanOrEqualTo(2.1)]
+            [LessThanOrEqualTo(1.9)]
             private readonly int _i3;
         }
 
@@ -101,6 +109,8 @@ namespace ValidationsTests
 
             [LessThan(-3)]
             [GreaterThan(-1)]
+            [GreaterThanOrEqualTo(-1)]
+            [LessThanOrEqualTo(-3)]
             public int I { get; set; }
 
             [Future]
@@ -223,10 +233,10 @@ namespace ValidationsTests
 
             // Assert
             Assert.False(propertiesValid);
-            Assert.Equal(31, propertyOffenses.Count);
+            Assert.Equal(37, propertyOffenses.Count);
 
             Assert.False(fieldsValid);
-            Assert.Equal(18, fieldOffenses.Count);
+            Assert.Equal(22, fieldOffenses.Count);
         }
 
         [Fact]
@@ -259,7 +269,7 @@ namespace ValidationsTests
 
             // Assert
             Assert.False(valid);
-            Assert.Equal(2, offenses.Count);
+            Assert.Equal(4, offenses.Count);
         }
 
         [Fact]
@@ -301,7 +311,7 @@ namespace ValidationsTests
 
             // Assert
             Assert.False(valid);
-            Assert.Equal(2, offenses.Count);
+            Assert.Equal(4, offenses.Count);
         }
 
         [Fact]
@@ -315,7 +325,7 @@ namespace ValidationsTests
 
             // Assert
             Assert.False(valid);
-            Assert.Equal(2, offenses.Count);
+            Assert.Equal(4, offenses.Count);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Rainsoft.Validations.Core
 
         /// <summary>
         /// Validates that <paramref name="value"/> does not belong to the future.
+        /// <para>A possible nested validator is executed first if one was supplied in the constructor.</para>
         /// </summary>
         /// <param name="value">The DateTime to validate. If time should be ignored, only the date part can be included.</param>
         /// <returns>True if value is less than or equal to DateTime.Now.</returns>

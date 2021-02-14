@@ -101,16 +101,19 @@ namespace ValidationsTests
         }
 
         [Theory]
-        [InlineData(5, -4, 8, true)]    //5 is greater than -4 and less than 8
-        [InlineData(5, 5, 8, false)]
-        [InlineData(5, -4, 5, false)]
-        [InlineData(5, 6, 8, false)]
-        public void Validate_NumberRange_Correctly(int value, int lowMargin, int highMargin, bool expected)
+        [InlineData(5, -4, 8, false, true)]    //5 is greater than -4 and less than 8
+        [InlineData(5, 5, 8, false, false)]
+        [InlineData(5, 5, 8, true, true)]
+        [InlineData(5, -4, 5, false, false)]
+        [InlineData(5, -4, 5, true, true)]
+        [InlineData(5, 6, 8, false, false)]
+        [InlineData(5, 2, 4, false, false)]
+        public void Validate_NumberRange_Correctly(int value, int lowMargin, int highMargin, bool orEqualTo, bool expected)
         {
             //Arrange
             var validator =
-                new GreaterValidator<int>(lowMargin,
-                new LesserValidator<int>(highMargin));
+                new GreaterValidator<int>(lowMargin, orEqualTo,
+                new LesserValidator<int>(highMargin, orEqualTo));
 
             //Act
             bool valid = validator.IsValid(value);
@@ -120,14 +123,20 @@ namespace ValidationsTests
         }
 
         [Theory]
-        [InlineData(100.01, 0, 100, false)]
-        [InlineData(99.9, 0, 100, true)]
-        public void Validate_DoubleNumberRange_Correctly(double value, int lowMargin, int highMargin, bool expected)
+        [InlineData(100.01, 0, 100, false, false)]
+        [InlineData(49.99, 50, 100, false, false)]
+        [InlineData(99.9, 0, 100, false, true)]
+        [InlineData(64.01, 64.001, 64.02, false, true)]
+        [InlineData(64.01, 64.01, 64.02, false, false)]
+        [InlineData(64.01, 64.01, 64.02, true, true)]
+        [InlineData(64.02, 64.01, 64.02, false, false)]
+        [InlineData(64.02, 64.01, 64.02, true, true)]
+        public void Validate_DoubleNumberRange_Correctly(double value, double lowMargin, double highMargin, bool orEqualTo, bool expected)
         {
             //Arrange
             var validator =
-                new GreaterValidator<double>(lowMargin,
-                new LesserValidator<double>(highMargin));
+                new GreaterValidator<double>(lowMargin, orEqualTo,
+                new LesserValidator<double>(highMargin, orEqualTo));
 
             //Act
             bool valid = validator.IsValid(value);
@@ -208,19 +217,25 @@ namespace ValidationsTests
         }
 
         [Theory]
-        [InlineData(6, 4, 7, true)] // 6 is between 4 and 7.
-        [InlineData(3, 4, 7, false)]
-        [InlineData(8, 4, 7, false)]
-        [InlineData(4, 4, 7, false)]
-        [InlineData(7, 4, 7, false)]
-        public void Validate_RangeWithIComparable_Correctly(int val, int low, int high, bool expected)
+        [InlineData(6, 4, 7, false, true)] // 6 is between 4 and 7.
+        [InlineData(6, 4, 7, true, true)]
+        [InlineData(3, 4, 7, false, false)]
+        [InlineData(3, 4, 7, true, false)]
+        [InlineData(8, 4, 7, false, false)]
+        [InlineData(8, 4, 7, true, false)]
+        [InlineData(4, 4, 7, false, false)]
+        [InlineData(4, 4, 7, true, true)]
+        [InlineData(7, 4, 7, false, false)]
+        [InlineData(7, 4, 7, true, true)]
+        public void Validate_RangeWithIComparable_Correctly(int val, int low, int high, bool orEqualTo, bool expected)
         {
             // Arrange
             var lowMargin = new Comparable { I = low };
             var value = new Comparable { I = val };
             var highMargin = new Comparable { I = high };
-            var validator = new GreaterValidator<Comparable>(lowMargin,
-                new LesserValidator<Comparable>(highMargin));
+            var validator = 
+                new GreaterValidator<Comparable>(lowMargin, orEqualTo,
+                new LesserValidator<Comparable>(highMargin, orEqualTo));
 
             // Act
             bool isValid = validator.IsValid(value);

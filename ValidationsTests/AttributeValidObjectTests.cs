@@ -39,6 +39,8 @@ namespace ValidationsTests
 
             [GreaterThan(1.5)]
             [LessThan(2)]
+            [GreaterThanOrEqualTo(1.9)]
+            [LessThanOrEqualTo(1.9)]
             protected double a0D;
 
             [LongerThan(3)]
@@ -55,6 +57,8 @@ namespace ValidationsTests
 
             [GreaterThan(-5)]
             [LessThan(5)]
+            [GreaterThanOrEqualTo(-1)]
+            [LessThanOrEqualTo(1)]
             public int I0 { get; set; }
 
             public string S1 => _s1;
@@ -72,6 +76,8 @@ namespace ValidationsTests
 
             [GreaterThan(1)]
             [LessThan(3)]
+            [GreaterThanOrEqualTo(2)]
+            [LessThanOrEqualTo(3)]
             public int I1 { get; set; }
 
             [LessThan(4)]
@@ -83,6 +89,8 @@ namespace ValidationsTests
 
             [GreaterThan(1)]
             [LessThan(3)]
+            [GreaterThanOrEqualTo(1)]
+            [LessThanOrEqualTo(2)]
             private readonly int _i3;
         }
 
@@ -104,6 +112,8 @@ namespace ValidationsTests
 
             [GreaterThan(-3)]
             [LessThan(-1)]
+            [GreaterThanOrEqualTo(-2)]
+            [LessThanOrEqualTo(-2)]
             public int I { get; set; }
 
             [NotFuture]

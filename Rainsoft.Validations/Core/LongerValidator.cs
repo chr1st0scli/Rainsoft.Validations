@@ -22,9 +22,9 @@
         }
 
         /// <summary>
-        /// Validates that a string's length is greater than a given number. A possible nested validator 
-        /// is executed first if one was supplied in the constructor. If value is null, then false is
-        /// returned except if the nested validator does not accept null and throws an exception.
+        /// Validates that a string's length is greater than a given number. 
+        /// <para>A possible nested validator is executed first if one was supplied in the constructor.</para>
+        /// If value is null, then false is returned except if the nested validator does not accept null and throws an exception.
         /// </summary>
         /// <param name="value">The value to validate.</param>
         /// <returns>True if valid, false otherwise or if value is null.</returns>

@@ -4,7 +4,7 @@ namespace Rainsoft.Validations.Core
 {
     /// <summary>
     /// Validates using a method that returns a boolean value.
-    /// This validator is not meant to be combined with others.
+    /// <para>This validator is not meant to be combined with others.</para>
     /// </summary>
     public class FuncValidator : IValidator<Func<bool>>
     {

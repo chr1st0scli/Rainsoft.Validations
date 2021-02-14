@@ -1,5 +1,6 @@
 ﻿using Rainsoft.Validations.Attributes;
 using Rainsoft.Validations.Attributes.Engine;
+using System.Collections.Generic;
 using Xunit;
 
 namespace ValidationsTests
@@ -13,36 +14,10 @@ namespace ValidationsTests
             public A0 A { get; set; }
         }
 
-        [Fact]
-        public void Validate_WithInvalidEndsWith_Throws()
-        {
-            // Arrange
-            var a = new A0 { A = new A0() };
-
-            // Act
-            void Validate() => a.IsValid();
-
-            // Assert
-            Assert.Throws<InvalidRuleException>(Validate);
-        }
-
         class A1
         {
             [StartsWith("abc")]
             public A0 A { get; set; }
-        }
-
-        [Fact]
-        public void Validate_WithInvalidStartsWith_Throws()
-        {
-            // Arrange
-            var a = new A1 { A = new A0() };
-
-            // Act
-            void Validate() => a.IsValid();
-
-            // Assert
-            Assert.Throws<InvalidRuleException>(Validate);
         }
 
         class A2
@@ -51,36 +26,10 @@ namespace ValidationsTests
             public A0 A { get; set; }
         }
 
-        [Fact]
-        public void Validate_WithInvalidLength_Throws()
-        {
-            // Arrange
-            var a = new A2 { A = new A0() };
-
-            // Act
-            void Validate() => a.IsValid();
-
-            // Assert
-            Assert.Throws<InvalidRuleException>(Validate);
-        }
-
         class A3
         {
             [LongerThan(1)]
             public A0 A { get; set; }
-        }
-
-        [Fact]
-        public void Validate_WithInvalidLongerThan_Throws()
-        {
-            // Arrange
-            var a = new A3 { A = new A0() };
-
-            // Act
-            void Validate() => a.IsValid();
-
-            // Assert
-            Assert.Throws<InvalidRuleException>(Validate);
         }
 
         class A4
@@ -89,36 +38,10 @@ namespace ValidationsTests
             public A0 A { get; set; }
         }
 
-        [Fact]
-        public void Validate_WithInvalidShorterThan_Throws()
-        {
-            // Arrange
-            var a = new A4 { A = new A0() };
-
-            // Act
-            void Validate() => a.IsValid();
-
-            // Assert
-            Assert.Throws<InvalidRuleException>(Validate);
-        }
-
         class A5
         {
             [Matches("[0-9]")]
             public A0 A { get; set; }
-        }
-
-        [Fact]
-        public void Validate_WithInvalidMatches_Throws()
-        {
-            // Arrange
-            var a = new A5 { A = new A0() };
-
-            // Act
-            void Validate() => a.IsValid();
-
-            // Assert
-            Assert.Throws<InvalidRuleException>(Validate);
         }
 
         class A6
@@ -127,36 +50,10 @@ namespace ValidationsTests
             public A0 A { get; set; }
         }
 
-        [Fact]
-        public void Validate_WithInvalidNotFuture_Throws()
-        {
-            // Arrange
-            var a = new A6 { A = new A0() };
-
-            // Act
-            void Validate() => a.IsValid();
-
-            // Assert
-            Assert.Throws<InvalidRuleException>(Validate);
-        }
-
         class A7
         {
             [Future]
             public A0 A { get; set; }
-        }
-
-        [Fact]
-        public void Validate_WithInvalidFuture_Throws()
-        {
-            // Arrange
-            var a = new A7 { A = new A0() };
-
-            // Act
-            void Validate() => a.IsValid();
-
-            // Assert
-            Assert.Throws<InvalidRuleException>(Validate);
         }
 
         class A8
@@ -165,36 +62,10 @@ namespace ValidationsTests
             public A0 A { get; set; }
         }
 
-        [Fact]
-        public void Validate_WithInvalidGreaterThan_Throws()
-        {
-            // Arrange
-            var a = new A8 { A = new A0() };
-
-            // Act
-            void Validate() => a.IsValid();
-
-            // Assert
-            Assert.Throws<InvalidRuleException>(Validate);
-        }
-
         class A9
         {
             [LessThan(1)]
             public A0 A { get; set; }
-        }
-
-        [Fact]
-        public void Validate_WithInvalidLessThan_Throws()
-        {
-            // Arrange
-            var a = new A9 { A = new A0() };
-
-            // Act
-            void Validate() => a.IsValid();
-
-            // Assert
-            Assert.Throws<InvalidRuleException>(Validate);
         }
 
         class A10
@@ -203,12 +74,100 @@ namespace ValidationsTests
             public int A { get; set; }
         }
 
-        [Fact]
-        public void Validate_WithInvalidNotWhiteSpace_Throws()
+        class A11
+        {
+            [GreaterThanOrEqualTo(1)]
+            public A0 A { get; set; }
+        }
+
+        class A12
+        {
+            [LessThanOrEqualTo(1)]
+            public A0 A { get; set; }
+        }
+
+        public static IEnumerable<object[]> GetA0()
+        {
+            yield return new[] { new A0 { A = new A0() } };
+        }
+
+        public static IEnumerable<object[]> GetA1()
+        {
+            yield return new[] { new A1 { A = new A0() } };
+        }
+
+        public static IEnumerable<object[]> GetA2()
+        {
+            yield return new[] { new A2 { A = new A0() } };
+        }
+
+        public static IEnumerable<object[]> GetA3()
+        {
+            yield return new[] { new A3 { A = new A0() } };
+        }
+
+        public static IEnumerable<object[]> GetA4()
+        {
+            yield return new[] { new A4 { A = new A0() } };
+        }
+
+        public static IEnumerable<object[]> GetA5()
+        {
+            yield return new[] { new A5 { A = new A0() } };
+        }
+
+        public static IEnumerable<object[]> GetA6()
+        {
+            yield return new[] { new A6 { A = new A0() } };
+        }
+
+        public static IEnumerable<object[]> GetA7()
+        {
+            yield return new[] { new A7 { A = new A0() } };
+        }
+
+        public static IEnumerable<object[]> GetA8()
+        {
+            yield return new[] { new A8 { A = new A0() } };
+        }
+
+        public static IEnumerable<object[]> GetA9()
+        {
+            yield return new[] { new A9 { A = new A0() } };
+        }
+
+        public static IEnumerable<object[]> GetA10()
+        {
+            yield return new[] { new A10 { A = 1 } };
+        }
+
+        public static IEnumerable<object[]> GetA11()
+        {
+            yield return new[] { new A11 { A = new A0() } };
+        }
+
+        public static IEnumerable<object[]> GetA12()
+        {
+            yield return new[] { new A12 { A = new A0() } };
+        }
+
+        [Theory]
+        [MemberData(nameof(GetA0))]
+        [MemberData(nameof(GetA1))]
+        [MemberData(nameof(GetA2))]
+        [MemberData(nameof(GetA3))]
+        [MemberData(nameof(GetA4))]
+        [MemberData(nameof(GetA5))]
+        [MemberData(nameof(GetA6))]
+        [MemberData(nameof(GetA7))]
+        [MemberData(nameof(GetA8))]
+        [MemberData(nameof(GetA9))]
+        [MemberData(nameof(GetA10))]
+        [MemberData(nameof(GetA11))]
+        [MemberData(nameof(GetA12))]
+        public void Validate_WithInvalidAttributes_Throws(object a)
         {
             // Arrange
-            var a = new A10 { A = 1 };
-
             // Act
             void Validate() => a.IsValid();
 

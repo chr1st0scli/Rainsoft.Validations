@@ -27,7 +27,7 @@ namespace Rainsoft.Validations.Core
 
         /// <summary>
         /// Validates that value is valid according to a predicate. 
-        /// A possible nested validator is executed first if one was supplied in the constructor.
+        /// <para>A possible nested validator is executed first if one was supplied in the constructor.</para>
         /// </summary>
         /// <param name="value">The value to validate.</param>
         /// <returns>True if valid, false otherwise.</returns>
@@ -38,6 +38,7 @@ namespace Rainsoft.Validations.Core
                 return false;
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
+
             return predicate(value);
         }
     }
