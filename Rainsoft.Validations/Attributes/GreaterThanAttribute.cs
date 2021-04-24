@@ -9,7 +9,7 @@ namespace Rainsoft.Validations.Attributes
     /// The target's type must be convertible to a double.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public sealed class GreaterThanAttribute : Attribute, IObjectValueRule
+    public sealed class GreaterThanAttribute : AttributeRule
     {
         private readonly GreaterValidator<double> _validator;
         private readonly double _margin;
@@ -29,9 +29,8 @@ namespace Rainsoft.Validations.Attributes
         /// </summary>
         /// <param name="value">The value to validate which must be convertible to a double.</param>
         /// <returns>True if valid, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if value is null.</exception>
-        /// <exception cref="InvalidRuleException">Thrown if value's runtime type is not compatible with a double.</exception>
-        public bool IsValid(object value)
+        /// <exception cref="InvalidRuleException">Thrown if value is null or its runtime type is not compatible with a double.</exception>
+        public override bool IsValid(object value)
         {
             double d = this.GetFromDoubleCompatible(value);
             return _validator.IsValid(d);

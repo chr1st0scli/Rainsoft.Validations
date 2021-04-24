@@ -1,24 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Rainsoft.Validations.Core;
 using Xunit;
 
 namespace ValidationsTests
 {
-    [Trait("Validations", "Core")]
-    public class CoreTests
+    public class DecoratorTests
     {
         [Fact]
         public void Validate_WithSingleLengthValidator_Correctly()
         {
             //Arrange
-            IValidator<string> validator = new LengthValidator(5);
+            IValueValidator<string> validator = new LengthValidator(5);
 
             //Act
             bool valid = validator.IsValid("hello");
 
             //Assert
             Assert.True(valid);
+        }
+
+        [Theory]
+        [InlineData(typeof(StartsWithValidator))]
+        [InlineData(typeof(EndsWithValidator))]
+        public void Validate_NullValueStartsEnds_False(Type validatorType)
+        {
+            // Arrange
+            var validator = (IValueValidator<string>)Activator.CreateInstance(validatorType, "", true, null);
+
+            // Act
+            bool isValid = validator.IsValid(null);
+
+            // Assert
+            // It can be said that a null value does not start or end with anything non null.
+            Assert.False(isValid);
+        }
+
+        [Theory]
+        [InlineData(typeof(LengthValidator), 0, true)]      // null has a 0 length.
+        [InlineData(typeof(LengthValidator), 10, false)]    // null does not have a length of 10.
+        [InlineData(typeof(LongerValidator), 0, false)]     // null is not longer than 0.
+        [InlineData(typeof(LongerValidator), 10, false)]    // null is not longer than 10.
+        [InlineData(typeof(ShorterValidator), 0, false)]    // null is not shorter than 0, its length is 0.
+        [InlineData(typeof(ShorterValidator), 10, true)]    // null is shorter than 10.
+        public void Validate_NullValue_Correctly(Type validatorType, uint length, bool expected)
+        {
+            // Arrange
+            var validator = (IValueValidator<string>)Activator.CreateInstance(validatorType, length, null);
+
+            // Act
+            bool isValid = validator.IsValid(null);
+
+            // Assert
+            Assert.Equal(expected, isValid);
         }
 
         [Theory]
@@ -34,7 +69,7 @@ namespace ValidationsTests
         {
             //Arrange
             //Combine multiple validators to run.
-            IValidator<string> validator =
+            IValueValidator<string> validator =
                 new LengthValidator(length,
                 new StartsWithValidator(start, caseSensitive,
                 new EndsWithValidator(end, caseSensitive)));
@@ -55,7 +90,7 @@ namespace ValidationsTests
         {
             //Arrange
             DateTime dt = DateTime.Now.AddDays(daysToAdd);
-            IValidator<DateTime> validator = new NotFutureValidator();
+            IValueValidator<DateTime> validator = new NotFutureValidator();
 
             //Act
             bool valid = validator.IsValid(dt);
@@ -72,7 +107,7 @@ namespace ValidationsTests
         public void Validate_FutureDateTime_Correctly(int daysToAdd, bool expected)
         {
             //Arrange
-            IValidator<DateTime> validator = new FutureValidator();
+            IValueValidator<DateTime> validator = new FutureValidator();
 
             //Act
             bool valid = validator.IsValid(DateTime.Now.AddDays(daysToAdd));
@@ -89,7 +124,7 @@ namespace ValidationsTests
         public void Validate_LengthRange_Correctly(string value, uint longer, uint shorter, bool expected)
         {
             //Arrange
-            IValidator<string> validator =
+            IValueValidator<string> validator =
                 new LongerValidator(longer,
                 new ShorterValidator(shorter));
 
@@ -155,7 +190,7 @@ namespace ValidationsTests
         {
             //Arrange
             int[] values = new[] { 1, 2, 3, 4, 5 };
-            IValidator<int> oneOfValidator = new OneOfValidator<int>(values);
+            IValueValidator<int> oneOfValidator = new OneOfValidator<int>(values);
 
             //Act
             bool valid = oneOfValidator.IsValid(value);
@@ -172,7 +207,7 @@ namespace ValidationsTests
         public void Validate_WithRegex_Valid(string regex, string value, bool expected)
         {
             //Arrange
-            IValidator<string> validator = new RegexValidator(new Regex(regex));
+            IValueValidator<string> validator = new RegexValidator(new Regex(regex));
 
             //Act
             bool valid = validator.IsValid(value);
@@ -192,7 +227,7 @@ namespace ValidationsTests
         public void Validate_WithPredicate_Valid()
         {
             //Arrange    
-            IValidator<Guy> workingAgeValidator = 
+            IValueValidator<Guy> workingAgeValidator =
                 new PredicateValidator<Guy>(g => g.Age >= 18,
                 new PredicateValidator<Guy>(g => g.Age <= 80));
 
@@ -207,7 +242,7 @@ namespace ValidationsTests
         public void Validate_WithFunc_Valid()
         {
             //Arrange
-            IValidator<Func<bool>> validator = new FuncValidator();
+            IValueValidator<Func<bool>> validator = new FuncValidator();
 
             //Act
             bool valid = validator.IsValid(() => _guy.Age >= 18);
@@ -233,7 +268,7 @@ namespace ValidationsTests
             var lowMargin = new Comparable { I = low };
             var value = new Comparable { I = val };
             var highMargin = new Comparable { I = high };
-            var validator = 
+            var validator =
                 new GreaterValidator<Comparable>(lowMargin, orEqualTo,
                 new LesserValidator<Comparable>(highMargin, orEqualTo));
 
@@ -254,7 +289,7 @@ namespace ValidationsTests
         {
             // Arrange
             var values = new[] { new TestClass(1), new TestClass(2), new TestClass(3) };
-            var validator = new OneOfValidator<TestClass>(values, null, new TestComparer());
+            var validator = new OneOfValidator<TestClass>(values, new TestComparer());
 
             // Act
             bool isValid = validator.IsValid(new TestClass(value));

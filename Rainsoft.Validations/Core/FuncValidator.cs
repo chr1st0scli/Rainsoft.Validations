@@ -6,7 +6,7 @@ namespace Rainsoft.Validations.Core
     /// Validates using a method that returns a boolean value.
     /// <para>This validator is not meant to be combined with others.</para>
     /// </summary>
-    public class FuncValidator : IValidator<Func<bool>>
+    public class FuncValidator : IValueValidator<Func<bool>>
     {
         /// <summary>
         /// Runs a validation using a deferred method that performs the actual validation.
@@ -19,5 +19,11 @@ namespace Rainsoft.Validations.Core
         {
             return value?.Invoke() ?? throw new ArgumentNullException(nameof(value));
         }
+
+        /// <summary>
+        /// Returns a string representation of this validator.
+        /// </summary>
+        /// <returns>A string representation of this instance.</returns>
+        public override string ToString() => $"{nameof(FuncValidator)}";
     }
 }

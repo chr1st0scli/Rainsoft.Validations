@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using Rainsoft.Validations.Attributes;
 using Rainsoft.Validations.Attributes.Engine;
+using Rainsoft.Validations.Core;
 using Xunit;
 
 namespace ValidationsTests
 {
-    [Trait("Validations", "Attributes")]
     public class AttributeInvalidObjectTests
     {
         class BaseA0
@@ -167,7 +167,7 @@ namespace ValidationsTests
             [OneOf(1, 2, 3, 4)]
             public int I2 { get; set; }
 
-            [NotWhiteSpace]
+            [NotNullOrWhiteSpace]
             public string S2 { get; set; }
 
             [OneOf("bird", "cat", "dog")]
@@ -186,7 +186,7 @@ namespace ValidationsTests
             [OneOf("abc", "def", "ghi")]
             private readonly string _s4;
 
-            [NotWhiteSpace]
+            [NotNullOrWhiteSpace]
             private readonly string _s5;
         }
 

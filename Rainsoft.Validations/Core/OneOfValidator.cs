@@ -24,10 +24,10 @@ namespace Rainsoft.Validations.Core
         /// Constructs a validator that determines if a given value belongs to a certain set.
         /// </summary>
         /// <param name="values">The set a value must belong to.</param>
-        /// <param name="validator">A validator of the same type that can be combined with this one.</param>
         /// <param name="comparer">An optional comparer to be used when searching, that defines when two values are equal.</param>
-        /// <exception cref="ArgumentNullException">Thrown if values is null.</exception>
-        public OneOfValidator(IEnumerable<T> values, IValidator<T> validator = null, IEqualityComparer<T> comparer = null)
+        /// <param name="validator">A validator of the same type that can be combined with this one.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="values"/> is null.</exception>
+        public OneOfValidator(IEnumerable<T> values, IEqualityComparer<T> comparer = null, IValueValidator<T> validator = null)
             : base(validator)
         {
             this.values = values ?? throw new ArgumentNullException(nameof(values));
@@ -50,5 +50,11 @@ namespace Rainsoft.Validations.Core
 
             return values.Contains(value, comparer);
         }
+
+        /// <summary>
+        /// Returns a string representation of this validator.
+        /// </summary>
+        /// <returns>A string representation of this instance.</returns>
+        public override string ToString() => $"{nameof(OneOfValidator<T>)} {string.Join(",", values)}";
     }
 }

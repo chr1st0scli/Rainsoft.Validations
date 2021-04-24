@@ -1,11 +1,10 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Rainsoft.Validations.Attributes.Engine;
+using Rainsoft.Validations.Core;
 using Xunit;
 
 namespace ValidationsTests
 {
-    [Trait("Validations", "ExceptionSerializer")]
     public class ExceptionSerializerTests
     {
         [Fact]

@@ -9,7 +9,7 @@ namespace Rainsoft.Validations.Attributes
     /// The target's type must be either a string or a primitive type.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public sealed class LongerThanAttribute : Attribute, IObjectValueRule
+    public sealed class LongerThanAttribute : AttributeRule
     {
         private readonly LongerValidator _validator;
         private readonly uint _length;
@@ -28,9 +28,9 @@ namespace Rainsoft.Validations.Attributes
         /// Validates that <paramref name="value"/>'s length is greater than a given number.
         /// </summary>
         /// <param name="value">The value to validate. It must be a primitive or string.</param>
-        /// <returns>True if valid, false otherwise or if value is null.</returns>
+        /// <returns>True if valid, false otherwise or if <paramref name="value"/> is null.</returns>
         /// <exception cref="InvalidRuleException">Thrown if value's runtime type is neither a primitive nor a string.</exception>
-        public bool IsValid(object value)
+        public override bool IsValid(object value)
         {
             string s = this.GetFromStringOrPrimitive(value);
             return _validator.IsValid(s);

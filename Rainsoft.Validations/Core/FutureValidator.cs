@@ -8,10 +8,10 @@ namespace Rainsoft.Validations.Core
     public class FutureValidator : ValidatorDecorator<DateTime>
     {
         /// <summary>
-        /// Constructs a validator for checking if a DateTime belongs to the future.
+        /// Constructs a validator for checking if a <see cref="DateTime"/> belongs to the future.
         /// </summary>
         /// <param name="validator">A DateTime validator that can be combined with this one.</param>
-        public FutureValidator(IValidator<DateTime> validator = null)
+        public FutureValidator(IValueValidator<DateTime> validator = null)
             : base(validator)
         {
         }
@@ -29,5 +29,11 @@ namespace Rainsoft.Validations.Core
 
             return value > DateTime.Now;
         }
+
+        /// <summary>
+        /// Returns a string representation of this validator.
+        /// </summary>
+        /// <returns>A string representation of this instance.</returns>
+        public override string ToString() => $"{nameof(FutureValidator)}";
     }
 }

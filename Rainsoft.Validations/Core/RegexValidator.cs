@@ -18,8 +18,8 @@ namespace Rainsoft.Validations.Core
         /// </summary>
         /// <param name="regex">The regular expression to use.</param>
         /// <param name="validator">A string validator that can be combined with this one.</param>
-        /// <exception cref="ArgumentNullException">Thrown if regex is null.</exception>
-        public RegexValidator(Regex regex, IValidator<string> validator = null)
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="regex"/> is null.</exception>
+        public RegexValidator(Regex regex, IValueValidator<string> validator = null)
             : base(validator)
         {
             this.regex = regex ?? throw new ArgumentNullException(nameof(regex));
@@ -30,16 +30,19 @@ namespace Rainsoft.Validations.Core
         /// <para>A possible nested validator is executed first if one was supplied in the constructor.</para>
         /// </summary>
         /// <param name="value">The value to validate.</param>
-        /// <returns>True if valid, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if value is null.</exception>
+        /// <returns>True if valid, false otherwise or if <paramref name="value"/> is null.</returns>
         public override bool IsValid(string value)
         {
-            if (!base.IsValid(value))
+            if (!base.IsValid(value) || value == null)
                 return false;
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
 
             return regex.IsMatch(value);
         }
+
+        /// <summary>
+        /// Returns a string representation of this validator.
+        /// </summary>
+        /// <returns>A string representation of this instance.</returns>
+        public override string ToString() => $"{nameof(RegexValidator)} {regex}";
     }
 }

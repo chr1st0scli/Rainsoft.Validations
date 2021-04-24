@@ -11,7 +11,7 @@ namespace Rainsoft.Validations.Attributes
     /// The property's type must be either a string or a primitive type.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = true)]
-    public sealed class MatchesAttribute : Attribute, IObjectValueRule
+    public sealed class MatchesAttribute : AttributeRule
     {
         private readonly RegexValidator _validator;
         private readonly string _pattern;
@@ -21,6 +21,7 @@ namespace Rainsoft.Validations.Attributes
         /// </summary>
         /// <param name="pattern">The regular expression which cannot be null.</param>
         /// <param name="options">A bitwise combination options for the regular expression.</param>
+        /// <exception cref="ArgumentException">Thrown if pattern is not a valid regular expression.</exception>
         public MatchesAttribute(string pattern, RegexOptions options = RegexOptions.None)
         {
             _pattern = pattern;
@@ -31,10 +32,9 @@ namespace Rainsoft.Validations.Attributes
         /// Validates that <paramref name="value"/> matches a regular expression.
         /// </summary>
         /// <param name="value">The value to validate. It must be a primitive or string.</param>
-        /// <returns>True if valid, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if value is null.</exception>
+        /// <returns>True if valid, false otherwise or if <paramref name="value"/> is null.</returns>
         /// <exception cref="InvalidRuleException">Thrown if value's runtime type is neither a primitive nor a string.</exception>
-        public bool IsValid(object value)
+        public override bool IsValid(object value)
         {
             string s = this.GetFromStringOrPrimitive(value);
             return _validator.IsValid(s);

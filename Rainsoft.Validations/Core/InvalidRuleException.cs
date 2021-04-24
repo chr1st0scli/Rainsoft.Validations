@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Rainsoft.Validations.Attributes.Engine
+namespace Rainsoft.Validations.Core
 {
     /// <summary>
     /// An exception that is meant to be thrown when a validation attribute is applied on an incompatible type.
@@ -10,12 +10,12 @@ namespace Rainsoft.Validations.Attributes.Engine
     public class InvalidRuleException : Exception
     {
         /// <summary>
-        /// The <see cref="IObjectValueRule"/> runtime type that is not compatible with a target.
+        /// The rule's runtime type that is not compatible with <see cref="TargetType"/>.
         /// </summary>
         public Type RuleType { get; set; }
 
         /// <summary>
-        /// The target's runtime type that the RuleType is not compatible with.
+        /// The target's runtime type that the <see cref="RuleType"/> is not compatible with.
         /// </summary>
         public Type TargetType { get; set; }
 

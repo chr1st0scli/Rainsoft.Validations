@@ -21,10 +21,10 @@ namespace Rainsoft.Validations.Core
         /// Constructs a validator for checking a value's start.
         /// </summary>
         /// <param name="start">The desired way a value must start with.</param>
-        /// <param name="caseSensitive">Specifies if start is checked in a case sensitive manner.</param>
+        /// <param name="caseSensitive">Specifies if <paramref name="start"/> is checked in a case sensitive manner.</param>
         /// <param name="validator">A string validator that can be combined with this one.</param>
-        /// <exception cref="ArgumentNullException">Thrown if start is null.</exception>
-        public StartsWithValidator(string start, bool caseSensitive = true, IValidator<string> validator = null)
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="start"/> is null.</exception>
+        public StartsWithValidator(string start, bool caseSensitive = true, IValueValidator<string> validator = null)
             : base(validator)
         {
             this.start = start ?? throw new ArgumentNullException(nameof(start));
@@ -36,14 +36,19 @@ namespace Rainsoft.Validations.Core
         /// <para>A possible nested validator is executed first if one was supplied in the constructor.</para>
         /// </summary>
         /// <param name="value">The value to validate.</param>
-        /// <returns>True if valid, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if value is null.</exception>
+        /// <returns>True if valid, false otherwise or if <paramref name="value"/> is null.</returns>
         public override bool IsValid(string value)
         {
-            if (!base.IsValid(value))
+            if (!base.IsValid(value) || value == null)
                 return false;
 
-            return value?.StartsWith(start, caseSensitive ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase) ?? throw new ArgumentNullException(nameof(value));
+            return value.StartsWith(start, caseSensitive ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase);
         }
+
+        /// <summary>
+        /// Returns a string representation of this validator.
+        /// </summary>
+        /// <returns>A string representation of this instance.</returns>
+        public override string ToString() => $"{nameof(StartsWithValidator)} {start}";
     }
 }

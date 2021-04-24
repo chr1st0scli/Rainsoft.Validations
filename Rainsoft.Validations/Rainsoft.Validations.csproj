@@ -2,23 +2,33 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>A library for easy validations. You can easily validate instances of your classes (DTOs, POCOs) or any values, whether it be method parameters or anything else. It can also be used for validating user input or writing tests.
+    <Description>A library for easy validations. You can easily validate instances of your classes or any values, whether it be method parameters or anything else. It can also be used for validating user input or writing tests.
 
-It consists of two main mechanisms. The first one is combining different validations at runtime using decorators. The second one is declarative using attributes on class data members.</Description>
+You may combine different validations at runtime using decorators to validate individual values. It also allows you to expressibly validate instances of your classes, either in source code or declaratively using attributes on class data members.</Description>
     <RepositoryUrl>https://github.com/chr1st0scli/Rainsoft.Validations</RepositoryUrl>
-    <PackageTags>validation attribute decorator dto poco</PackageTags>
+    <PackageTags>validation attribute decorator dto poco class</PackageTags>
     <Authors>Christos Giamouridis</Authors>
     <Company>Rainsoft</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/chr1st0scli/Rainsoft.Validations</PackageProjectUrl>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <FileVersion>3.0.0.0</FileVersion>
-    <Version>3.0.0</Version>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <FileVersion>4.0.0.0</FileVersion>
+    <Version>4.0.0</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageIcon>RainApps.png</PackageIcon>
-    <PackageReleaseNotes>GreaterValidator and LesserValidator are now capable of an optional "or equals to" comparison.
+    <PackageReleaseNotes>New classes MemberValidator and InstanceValidator for expressibly validating instances of classes in source code.
+Validation Attributes can now have associated error messages.
+Various improvements.
 
-New attribute classes GreaterThanOrEqualTo and LessThanOrEqualTo are included.</PackageReleaseNotes>
+Breaking changes:
+IValidator is renamed to IValueValidator and a new IValidator is introduced.
+InvalidRuleException and ValidationOffense classes change namespace.
+ValidationOffense.Rule changes to a string and is renamed to ValidationOffense.OffendedRule.
+Interface IObjectValueRule becomes obsolete and replaced by a new class AttributeRule.
+NotWhiteSpaceAttribute class is renamed to NotNullOrWhiteSpaceAttribute.
+More accurate handling of null strings in Attribute validations.
+Some string based decorators are more tolerant to null strings and do not throw ArgumentNullException.
+</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

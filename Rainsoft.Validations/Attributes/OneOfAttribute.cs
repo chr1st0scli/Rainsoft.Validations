@@ -10,7 +10,7 @@ namespace Rainsoft.Validations.Attributes
     /// The target's type must be either a string or a primitive type.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public sealed class OneOfAttribute : Attribute, IObjectValueRule
+    public sealed class OneOfAttribute : AttributeRule
     {
         private readonly OneOfValidator<object> _validator;
         private readonly IEnumerable<object> _values;
@@ -19,6 +19,7 @@ namespace Rainsoft.Validations.Attributes
         /// Specifies the values that make up the set the target must belong to.
         /// </summary>
         /// <param name="values">The values.</param>
+        /// <exception cref="ArgumentNullException">Thrown if values is null.</exception>
         public OneOfAttribute(params object[] values)
         {
             _values = values;
@@ -30,9 +31,8 @@ namespace Rainsoft.Validations.Attributes
         /// </summary>
         /// <param name="value">The value to be searched for. It must be a primitive or string.</param>
         /// <returns>True if valid, false otherwise.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if value is null.</exception>
         /// <exception cref="InvalidRuleException">Thrown if value's runtime type is neither a primitive nor a string.</exception>
-        public bool IsValid(object value)
+        public override bool IsValid(object value)
         {
             // Just make sure it's a string or a primitive.
             this.GetFromStringOrPrimitive(value);

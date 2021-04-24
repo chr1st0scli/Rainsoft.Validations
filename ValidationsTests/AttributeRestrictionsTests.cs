@@ -1,11 +1,11 @@
 ﻿using Rainsoft.Validations.Attributes;
 using Rainsoft.Validations.Attributes.Engine;
+using Rainsoft.Validations.Core;
 using System.Collections.Generic;
 using Xunit;
 
 namespace ValidationsTests
 {
-    [Trait("Validations", "Attributes")]
     public class AttributeRestrictionsTests
     {
         class A0
@@ -70,7 +70,7 @@ namespace ValidationsTests
 
         class A10
         {
-            [NotWhiteSpace]
+            [NotNullOrWhiteSpace]
             public int A { get; set; }
         }
 

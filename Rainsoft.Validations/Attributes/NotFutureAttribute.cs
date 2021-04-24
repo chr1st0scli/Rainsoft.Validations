@@ -9,7 +9,7 @@ namespace Rainsoft.Validations.Attributes
     /// The property's type must be a DateTime.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public sealed class NotFutureAttribute : Attribute, IObjectValueRule
+    public sealed class NotFutureAttribute : AttributeRule
     {
         private readonly NotFutureValidator _validator;
 
@@ -22,9 +22,9 @@ namespace Rainsoft.Validations.Attributes
         /// Validates that <paramref name="value"/> does not belong to the future.
         /// </summary>
         /// <param name="value">The value to validate which must be a DateTime.</param>
-        /// <returns>True if value is less than or equal to DateTime.Now.</returns>
+        /// <returns>True if <paramref name="value"/> is less than or equal to DateTime.Now.</returns>
         /// <exception cref="InvalidRuleException">Thrown if value is not a DateTime or is null.</exception>
-        public bool IsValid(object value)
+        public override bool IsValid(object value)
         {
             DateTime dt = this.GetFromDateTime(value);
             return _validator.IsValid(dt);

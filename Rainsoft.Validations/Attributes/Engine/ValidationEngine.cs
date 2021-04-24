@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rainsoft.Validations.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -12,8 +13,10 @@ namespace Rainsoft.Validations.Attributes.Engine
     {
         /// <summary>
         /// Extension method to validate a class instance based on attribute validation declarations.
-        /// The validations are performed on the class itself and all other related classes via aggregation and inheritance relationships.
         /// </summary>
+        /// <remarks>
+        /// The validations are performed on the class itself and all other related classes via aggregation and inheritance relationships.
+        /// </remarks>
         /// <typeparam name="T">The type of object to validate.</typeparam>
         /// <param name="obj">The object to validate.</param>
         /// <param name="mode">The type of members to be validated, either properties or fields.</param>
@@ -26,12 +29,14 @@ namespace Rainsoft.Validations.Attributes.Engine
 
         /// <summary>
         /// Extension method to validate a class instance based on attribute validation declarations.
-        /// The validations are performed on the class itself and all other related classes via aggregation and inheritance relationships.
         /// Validation offenses are returned to let the client code know which validations failed.
         /// </summary>
+        /// <remarks>
+        /// The validations are performed on the class itself and all other related classes via aggregation and inheritance relationships.
+        /// </remarks>
         /// <typeparam name="T">The type of object to validate.</typeparam>
         /// <param name="obj">The object to validate.</param>
-        /// <param name="offenses">If obj is invalid, it contains the validation offenses, otherwise it is empty. Null can be initially passed.</param>
+        /// <param name="offenses">If obj is invalid, it contains the validation offenses, otherwise it is empty.</param>
         /// <param name="mode">The type of members to be validated, either properties or fields.</param>
         /// <param name="checkAll">True to gather all validation offenses. If false, the check stops at the first offense.</param>
         /// <returns>True if valid, false otherwise.</returns>
@@ -86,7 +91,7 @@ namespace Rainsoft.Validations.Attributes.Engine
         /// <typeparam name="T">The type of object to validate.</typeparam>
         /// <param name="obj">The object to validate.</param>
         /// <param name="memberName">The member's property or field name.</param>
-        /// <param name="offenses">If obj's member is invalid, it contains the validation offenses, otherwise it is empty. Null can be initially passed.</param>
+        /// <param name="offenses">If obj's member is invalid, it contains the validation offenses, otherwise it is empty.</param>
         /// <param name="checkAll">True to gather all member's validation offenses. If false, the check stops at the first offense.</param>
         /// <returns>True if valid, false otherwise.</returns>
         /// <exception cref="ArgumentException">If member name is not provided.</exception>
@@ -114,17 +119,18 @@ namespace Rainsoft.Validations.Attributes.Engine
         private static bool ValidateAttributes(MemberInfoWrapper member, string typeName, object value, IList<ValidationOffense> offenses, bool checkAll)
         {
             bool valid = true;
-            foreach (var attr in member.GetCustomAttributes(typeof(IObjectValueRule), false))
+            foreach (var attr in member.GetCustomAttributes(typeof(AttributeRule), false))
             {
-                if (attr is IObjectValueRule rule && !rule.IsValid(value))
+                if (attr is AttributeRule rule && !rule.IsValid(value))
                 {
                     valid = false;
                     offenses.Add(new ValidationOffense
                     {
                         TypeName = typeName,
-                        Rule = rule,
                         MemberName = member.Name,
-                        OffendingValue = value
+                        OffendingValue = value,
+                        OffendedRule = rule.ToString(),
+                        ErrorMessage = rule.ErrorMessage
                     });
                     if (!checkAll)
                         return valid;

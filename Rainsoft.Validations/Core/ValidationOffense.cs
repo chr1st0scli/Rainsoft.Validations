@@ -1,4 +1,4 @@
-﻿namespace Rainsoft.Validations.Attributes.Engine
+﻿namespace Rainsoft.Validations.Core
 {
     /// <summary>
     /// The information for a validation rule that failed, i.e. it is not satisfied.
@@ -11,18 +11,23 @@
         public string TypeName { get; set; }
 
         /// <summary>
-        /// The actual rule that failed.
-        /// </summary>
-        public IObjectValueRule Rule { get; set; }
-
-        /// <summary>
         /// The object's property or field name that did not satisfy the rule.
         /// </summary>
         public string MemberName { get; set; }
 
         /// <summary>
-        /// The object's property value that caused the rule to fail.
+        /// The object's property or field value that caused the rule to fail.
         /// </summary>
         public object OffendingValue { get; set; }
+
+        /// <summary>
+        /// A string representation of the rule that failed.
+        /// </summary>
+        public string OffendedRule { get; set; }
+
+        /// <summary>
+        /// An error message for the offense.
+        /// </summary>
+        public string ErrorMessage { get; set; }
     }
 }

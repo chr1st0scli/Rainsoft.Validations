@@ -15,7 +15,7 @@
         /// </summary>
         /// <param name="length">The length that must surpass a value's length.</param>
         /// <param name="validator">A string validator that can be combined with this one.</param>
-        public ShorterValidator(uint length, IValidator<string> validator = null)
+        public ShorterValidator(uint length, IValueValidator<string> validator = null)
             : base(validator)
         {
             this.length = length;
@@ -27,14 +27,26 @@
         /// If value is null, then true is returned except if the nested validator does not accept null and throws an exception.
         /// </summary>
         /// <param name="value">The value to validate.</param>
-        /// <returns>True if value is null or valid, false otherwise.</returns>
+        /// <returns>
+        /// True if valid or <paramref name="value"/> is null and the intended length is greater than 0.
+        /// False if invalid or <paramref name="value"/> is null and the intended length is 0.
+        /// </returns>
         public override bool IsValid(string value)
         {
             if (!base.IsValid(value))
                 return false;
 
-            // A null value is certainly shorter than anything.
-            return value == null || value.Length < length;
+            // A null value is shorter than any other uint but zero, because null's length is considered to be 0.
+            if (value == null)
+                return length > 0;
+
+            return value.Length < length;
         }
+
+        /// <summary>
+        /// Returns a string representation of this validator.
+        /// </summary>
+        /// <returns>A string representation of this instance.</returns>
+        public override string ToString() => $"{nameof(ShorterValidator)} {length}";
     }
 }

@@ -21,11 +21,11 @@ namespace Rainsoft.Validations.Core
         /// <summary>
         /// Constructs a validator for checking that a value is greater than, or optionally equal to, a <paramref name="margin"/>.
         /// </summary>
-        /// <param name="margin">The margin that a value must surpass.</param>
+        /// <param name="margin">The margin that a value must surpass or optionally be equal to.</param>
         /// <param name="orEqualTo">If true, the validator checks that a value is greater than or equal to <paramref name="margin"/>. If false, it checks that a value is only greater than <paramref name="margin"/>.</param>
         /// <param name="validator">A validator of the same type that can be combined with this one.</param>
         /// <exception cref="ArgumentNullException">Thrown if margin is null.</exception>
-        public GreaterValidator(T margin, bool orEqualTo = false, IValidator<IComparable<T>> validator = null)
+        public GreaterValidator(T margin, bool orEqualTo = false, IValueValidator<IComparable<T>> validator = null)
             : base(validator)
         {
             if (margin == null)
@@ -53,5 +53,11 @@ namespace Rainsoft.Validations.Core
 
             return orEqualTo ? res == 0 || res == 1 : res == 1;
         }
+
+        /// <summary>
+        /// Returns a string representation of this validator.
+        /// </summary>
+        /// <returns>A string representation of this instance.</returns>
+        public override string ToString() => $"{nameof(GreaterValidator<T>)} {margin}";
     }
 }
