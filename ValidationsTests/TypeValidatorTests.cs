@@ -174,8 +174,8 @@ namespace ValidationsTests
                 {
                     var experienceValidator = new InstanceValidator<WorkExperience>(e);
 
-                    experienceValidator.Checks(e => e.Employer).NotNullOrWhiteSpace();
-                    experienceValidator.Checks(e => e.Years).GreaterThan(0, true);
+                    experienceValidator.Checks(exp => exp.Employer).NotNullOrWhiteSpace();
+                    experienceValidator.Checks(exp => exp.Years).GreaterThan(0, true);
 
                     return experienceValidator;
                 });
@@ -286,8 +286,8 @@ namespace ValidationsTests
                 {
                     var experienceValidator = new InstanceValidator<WorkExperience>(e);
 
-                    experienceValidator.Checks(e => e.Employer).NotNullOrWhiteSpace();
-                    experienceValidator.Checks(e => e.Years).GreaterThan(0, true);
+                    experienceValidator.Checks(exp => exp.Employer).NotNullOrWhiteSpace();
+                    experienceValidator.Checks(exp => exp.Years).GreaterThan(0, true);
 
                     return experienceValidator;
                 });

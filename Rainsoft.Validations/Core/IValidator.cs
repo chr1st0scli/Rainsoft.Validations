@@ -3,7 +3,7 @@
 namespace Rainsoft.Validations.Core
 {
     /// <summary>
-    /// Iterface that defines an abstraction for validating data.
+    /// Interface that defines an abstraction for validating data.
     /// </summary>
     public interface IValidator
     {

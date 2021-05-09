@@ -1,7 +1,7 @@
 ﻿namespace Rainsoft.Validations.Core
 {
     /// <summary>
-    /// Iterface that defines an abstraction for validating a value.
+    /// Interface that defines an abstraction for validating a value.
     /// </summary>
     /// <typeparam name="T">The type of data to be validated.</typeparam>
     public interface IValueValidator<in T>
