@@ -24,7 +24,7 @@ This is available in the `Rainsoft.Validations.Core` namespace with several more
 # Instance Validators #
 Instance validators are particularly useful for checking whole instances of classes and their members.
 
-```
+```csharp
 // Given a class instance.
 var employee = new Employee
 {
@@ -70,7 +70,7 @@ You can declare a class and apply validation attributes on its properties or fie
 
 Given the following class.
 
-```
+```csharp
 // Declaratively specify the validation rules and optional error messages in your class declaration.
 public class Employee
 {
@@ -93,7 +93,7 @@ public class Employee
 
 You can validate it as follows.
 
-```
+```csharp
 // Given a class instance.
 var employee = new Employee
 {
@@ -124,7 +124,7 @@ This is available in the `Rainsoft.Validations.Attributes` namespace.
 If you want to use or combine Rainsoft.Validations attributes with Microsoft's MVC or Web API infrastructure, you can use the Rainsoft.Validations.MSAnnotations library.
 You can then use all Rainsoft attributes and the additional MSValidationAdapter to enable the .NET infrastructure use your attributes implicitly.
 
-```
+```csharp
 public class Employee
 {
     [MSValidationAdapter]
