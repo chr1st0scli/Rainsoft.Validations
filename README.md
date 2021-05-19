@@ -8,7 +8,7 @@ Decorators are particularly useful for checking individual values against severa
 
 At runtime, you may compose a complicated rule by combining simpler ones and then simply call the `IsValid` method with a value.
 
-```
+```csharp
 // Combine multiple validators to run.
 IValueValidator<string> validator =
     new LengthValidator(10,
