@@ -61,7 +61,7 @@ bool isValid = employeeValidator.IsValid();
 IList<ValidationOffense> offenses = null;
 isValid = employeeValidator.IsValid(ref offenses);
 ```
-This is also available in the `Rainsoft.Validations.Core` namespace with more validations.
+This is also available in the `Rainsoft.Validations.Core` namespace with more validations. Instance validators are inspired by FluentValidation.
 
 # Attributes #
 Attributes are particularly useful for defining validations declaratively on simple data-centric classes like DTOs.
