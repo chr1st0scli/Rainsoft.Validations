@@ -1,4 +1,6 @@
 # Rainsoft.Validations
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/chr1st0scli/3b78db31281e6d466bf05b91518e30ef/raw/rain-validations-code-coverage.json)
+
 A library for easy validations. You can easily validate instances of your classes or any values, whether it be method parameters or anything else. It can also be used for validating user input or writing tests.
 
 You may combine different validations at runtime using decorators to validate individual values. It also allows you to expressibly validate instances of your classes, either in source code or declaratively using attributes on class data members.
