@@ -29,8 +29,8 @@ jobs:
         label: Unit Test Coverage
         color: brightgreen
         path: ValidationsTests/TestResults/coverage.opencover.xml
-        gist-filename: code-coverage.json
-        gist-id: 3b78db31281e6d466bf05b91518e30ef
+        gist-filename: rain-validations-code-coverage.json
+        gist-id: f0fdc8ecc54e8bc61730caa4d91a8a3f
         gist-auth-token: ${{ secrets.GIST_AUTH_TOKEN }}       
     - name: Print code coverage
       run: echo "Code coverage percentage ${{steps.create_coverage_badge.outputs.percentage}}%"
