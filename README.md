@@ -1,5 +1,8 @@
 # Rainsoft.Validations
 ![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/chr1st0scli/f0fdc8ecc54e8bc61730caa4d91a8a3f/raw/rain-validations-code-coverage.json)
+[![nuget](https://img.shields.io/nuget/vpre/Rainsoft.Validations?color=blue)](https://www.nuget.org/packages/Rainsoft.Validations/)
+
+![Logo](RainApps.png)
 
 A library for easy validations. You can easily validate instances of your classes or any values, whether it be method parameters or anything else. It can also be used for validating user input or writing tests.
 
