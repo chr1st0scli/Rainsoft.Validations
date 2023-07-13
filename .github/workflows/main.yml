@@ -1,0 +1,36 @@
+name: Unit Test With Coverage
+on:
+  push:
+    branches:
+    - master
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.405
+    - name: Restore dependencies
+      run: dotnet restore   
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --collect:"XPlat Code Coverage;Format=opencover"
+        #dotnet test  -p:CollectCoverage=true -p:CoverletOutput=TestResults/ -p:CoverletOutputFormat=opencover --no-build --verbosity normal ValidationsTests/
+    - name: Copy File
+      run: cp ValidationsTests\TestResults\*\coverage.opencover.xml ValidationsTests\TestResults
+    - name: Create Test Coverage Badge
+      uses: simon-k/dotnet-code-coverage-badge@v1.0.0
+      id: create_coverage_badge
+      with:
+        label: Unit Test Coverage
+        color: brightgreen
+        path: ValidationsTests/TestResults/coverage.opencover.xml
+        gist-filename: code-coverage.json
+        gist-id: 3b78db31281e6d466bf05b91518e30ef
+        gist-auth-token: ${{ secrets.GIST_AUTH_TOKEN }}       
+    - name: Print code coverage
+      run: echo "Code coverage percentage ${{steps.create_coverage_badge.outputs.percentage}}%"
