@@ -1,6 +1,7 @@
 # Rainsoft.Validations
 ![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/chr1st0scli/f0fdc8ecc54e8bc61730caa4d91a8a3f/raw/rain-validations-code-coverage.json)
 [![nuget](https://img.shields.io/nuget/vpre/Rainsoft.Validations?color=blue)](https://www.nuget.org/packages/Rainsoft.Validations/)
+[![License](https://img.shields.io/github/license/chr1st0scli/Rainsoft.Validations)](LICENSE)
 
 ![Logo](RainApps.png)
 
@@ -126,6 +127,8 @@ isValid = employee.IsMemberValid(nameof(Employee.Position), ref memberOffenses);
 This is available in the `Rainsoft.Validations.Attributes` namespace.
 
 # MVC and Web API Integration #
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Rainsoft.Validations.MSAnnotations)](https://www.nuget.org/packages/Rainsoft.Validations.MSAnnotations)
+
 If you want to use or combine Rainsoft.Validations attributes with Microsoft's MVC or Web API infrastructure, you can use the Rainsoft.Validations.MSAnnotations library.
 You can then use all Rainsoft attributes and the additional MSValidationAdapter to enable the .NET infrastructure use your attributes implicitly.
 
